@@ -2,8 +2,9 @@
 - Track Ketones, Glucose, Weight, Blood Pressure
 - Add custom note to each entry
 - All data on your device, no ads or external network calls
+- Free forever
 
-## v1.0.0
+## v1.0.0 (Done, not heavily tested)
 - CRUD Entries on local device DB
 
 ## v1.1.0 (wip)
@@ -16,4 +17,11 @@
 - Permissions: Camera
 
 ## v2.0.0
-- Data graphs
+- Data graphs to spot trends
+
+
+# Specifications
+- Android / iOS 
+- No Web due to SQflite dependency
+
+
