@@ -20,6 +20,7 @@
 
 ## v2.0.0
 - Data graphs to spot trends
+- Publish to Google Play & App Store
 
 
 # Specifications
