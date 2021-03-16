@@ -1,3 +1,5 @@
+<img src="assets/icons/icon.png" alt="alt text" width="150" height="150">
+
 # Blood Hound
 - Track Ketones, Glucose, Weight, Blood Pressure
 - Add custom note to each entry
