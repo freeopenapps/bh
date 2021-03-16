@@ -1,4 +1,4 @@
-import 'package:bh/models/Entry.dart';
+import '../models/Entry.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 

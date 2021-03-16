@@ -1,4 +1,4 @@
-import 'package:bh/models/Entry.dart';
+import '../models/Entry.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
