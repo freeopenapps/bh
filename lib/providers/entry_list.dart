@@ -18,7 +18,6 @@ class EntryListProvider extends ChangeNotifier {
     _entries = await DBAPI.getAll();
     // Sort dates so latest at top of list
     _entries.sort((a, b) => b.date.compareTo(a.date));
-    notifyListeners();
   }
 
   //============= API
@@ -35,15 +34,18 @@ class EntryListProvider extends ChangeNotifier {
   void create(Entry entry) async {
     await DBAPI.insert(entry);
     _init();
+    notifyListeners();
   }
 
   void update(Entry entry) async {
     await DBAPI.update(entry);
     _init();
+    notifyListeners();
   }
 
   void delete(Entry entry) async {
     await DBAPI.delete(entry);
     _init();
+    notifyListeners();
   }
 }
