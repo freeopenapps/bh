@@ -1,4 +1,9 @@
+import 'dart:io';
+import 'dart:convert';
 import 'package:flutter/foundation.dart';
+import 'package:path/path.dart';
+import 'package:downloads_path_provider/downloads_path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:uuid/uuid.dart';
 
 class Entry {
@@ -48,5 +53,31 @@ class Entry {
       note: map['note'],
       picPath: map['picPath'],
     );
+  }
+
+  static Future<String> getFileDir() async {
+    if (await Permission.storage.request().isGranted) {
+      Directory tempDir = await DownloadsPathProvider.downloadsDirectory;
+      String tempPath = tempDir.path;
+      return join(tempPath, 'bloodhound');
+    }
+    return '';
+  }
+
+  static Future<void> toFile(Entry entry) async {
+    /** Write a json file <id>.json for given Entry*/
+    String path = await getFileDir();
+    if (path != '') {
+      var fullPath = join(await getFileDir(), entry.id + '.json');
+      File f = File(fullPath);
+      f.writeAsString(json.encode(entry.toMap()));
+    }
+  }
+
+  static Future<Entry> fromFile(String path) async {
+    /** Read a json file and return an Entry */
+    File f = File(path);
+    String data = await f.readAsString();
+    return Entry.fromMap(json.decode(data));
   }
 }

@@ -1,5 +1,8 @@
+import 'dart:io';
 import 'dart:collection';
+import 'package:validators/validators.dart';
 import 'package:flutter/foundation.dart';
+import 'package:path/path.dart';
 
 import '../models/Entry.dart';
 import '../data/db_api.dart';
@@ -34,16 +37,36 @@ class EntryListProvider extends ChangeNotifier {
 
   void create(Entry entry) async {
     await DBAPI.insert(entry);
-    _init();
+    await _init();
   }
 
   void update(Entry entry) async {
     await DBAPI.update(entry);
-    _init();
+    await _init();
   }
 
   void delete(Entry entry) async {
     await DBAPI.delete(entry);
-    _init();
+    await _init();
+  }
+
+  //============= Backup / Restore API
+  Future<void> backUp() async {
+    await _init();
+    _entries.map((e) => Entry.toFile(e));
+  }
+
+  void restore() async {
+    await _init();
+    Directory path = Directory(await Entry.getFileDir());
+
+    // Get files with uuid names
+    List<FileSystemEntity> files = await path
+        .list()
+        .where((obj) => isUUID(basename(obj.path.split('.')[0])))
+        .toList();
+
+    // Create entries from the files
+    files.map((e) async => DBAPI.insert(await Entry.fromFile(e.path)));
   }
 }
