@@ -13,37 +13,40 @@ class EntryRowItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Container(
-        margin: EdgeInsets.symmetric(vertical: 8, horizontal: 1),
-        padding: EdgeInsets.all(2),
-        child: Column(
-          children: <Widget>[
-            Text(
-              this.title,
-              style: TextStyle(
-                fontWeight: FontWeight.normal,
-                fontSize: 12,
-                color: Theme.of(context).colorScheme.primaryVariant,
+    return Directionality(
+      textDirection: TextDirection.ltr,
+      child: Expanded(
+        child: Container(
+          margin: EdgeInsets.symmetric(vertical: 8, horizontal: 1),
+          padding: EdgeInsets.all(2),
+          child: Column(
+            children: <Widget>[
+              Text(
+                this.title,
+                style: TextStyle(
+                  fontWeight: FontWeight.normal,
+                  fontSize: 12,
+                  color: Theme.of(context).colorScheme.primaryVariant,
+                ),
               ),
-            ),
-            Text(
-              this.value,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 12,
-                color: Theme.of(context).colorScheme.secondaryVariant,
+              Text(
+                this.value,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 12,
+                  color: Theme.of(context).colorScheme.secondaryVariant,
+                ),
               ),
-            ),
-            Text(
-              this.units,
-              style: TextStyle(
-                fontWeight: FontWeight.normal,
-                fontSize: 10,
-                color: Theme.of(context).primaryColor,
+              Text(
+                this.units,
+                style: TextStyle(
+                  fontWeight: FontWeight.normal,
+                  fontSize: 10,
+                  color: Theme.of(context).primaryColor,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
