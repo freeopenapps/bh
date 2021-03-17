@@ -5,7 +5,7 @@ import './views/EntryView.dart';
 import './providers/entry_list.dart';
 
 void main() {
-  final String version = 'v0.1.0';
+  final String version = 'v1.0.0';
   final String title = 'Blood Hound ';
 
   runApp(
