@@ -87,8 +87,8 @@ class _BackupModalState extends State<BackupModal> {
     Navigator.of(context).pop();
     _messageDialog(
       context,
-      BackupModalStrings.backupCreatedDialogTitle,
-      BackupModalStrings.backupCreatedDialogMsg,
+      BackupModalStrings.backupFullCreatedDialogTitle,
+      BackupModalStrings.backupFullCreatedDialogMsg,
     );
   }
 
@@ -172,7 +172,7 @@ class _BackupModalState extends State<BackupModal> {
                   child: ElevatedButton(
                     child: Text(BackupModalStrings.createAllBtn),
                     style: Theme.of(context).elevatedButtonTheme.style,
-                    onPressed: () => {_createBackup(context)},
+                    onPressed: () => {_createFullBackup(context)},
                     autofocus: true,
                     clipBehavior: Clip.antiAlias,
                   ),

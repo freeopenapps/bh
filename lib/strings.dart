@@ -13,6 +13,8 @@ class BackupModalStrings {
   // Popups
   static const backupCreatedDialogTitle = 'Backup Created';
   static const backupCreatedDialogMsg = 'Backup Created!';
+  static const backupFullCreatedDialogTitle = 'Full Backup Created';
+  static const backupFullCreatedDialogMsg = 'Full Backup Created!';
   static const backupLoadedDialogTitle = 'Backup Loaded';
   static const backupLoadedDialogMsg = 'Backup data loaded into app!';
 }
