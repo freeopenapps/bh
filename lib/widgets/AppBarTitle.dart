@@ -1,3 +1,4 @@
+import 'package:bloodhound/widgets/BackupModal.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -72,6 +73,20 @@ class _AppBarTitleState extends State<AppBarTitle> {
     });
   }
 
+  void _backupModal(BuildContext ctx) {
+    showModalBottomSheet(
+      context: ctx,
+      isScrollControlled: true,
+      builder: (_) {
+        return GestureDetector(
+          child: BackupModal(),
+          onTap: () {},
+          behavior: HitTestBehavior.opaque,
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -95,25 +110,18 @@ class _AppBarTitleState extends State<AppBarTitle> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ElevatedButton(
-                      child: Text(
-                        DateFormat.yMd().format(_startDate),
-                      ),
-                      onPressed: () {
-                        _showDatePicker('start');
-                      },
-                      autofocus: true,
-                      clipBehavior: Clip.antiAlias,
-                      style: ElevatedButton.styleFrom(
-                        side: BorderSide(
-                          width: 0.5,
-                          color: Colors.black,
+                      padding: const EdgeInsets.all(8.0),
+                      child: ElevatedButton(
+                        child: Text(
+                          DateFormat.yMd().format(_startDate),
                         ),
-                        primary: Theme.of(context).buttonColor.withOpacity(0.6),
-                      ),
-                    ),
-                  ),
+                        onPressed: () {
+                          _showDatePicker('start');
+                        },
+                        autofocus: true,
+                        clipBehavior: Clip.antiAlias,
+                        style: Theme.of(context).elevatedButtonTheme.style,
+                      )),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: ElevatedButton(
@@ -125,13 +133,7 @@ class _AppBarTitleState extends State<AppBarTitle> {
                       },
                       autofocus: true,
                       clipBehavior: Clip.antiAlias,
-                      style: ElevatedButton.styleFrom(
-                        side: BorderSide(
-                          width: 0.5,
-                          color: Colors.black,
-                        ),
-                        primary: Theme.of(context).buttonColor.withOpacity(0.6),
-                      ),
+                      style: Theme.of(context).elevatedButtonTheme.style,
                     ),
                   ),
                 ],
@@ -139,11 +141,11 @@ class _AppBarTitleState extends State<AppBarTitle> {
             ],
           ),
           IconButton(
-            icon: Icon(Icons.settings),
+            icon: Icon(Icons.file_copy),
             iconSize: 40,
-            tooltip: 'Settings',
+            tooltip: 'Backup',
             color: Theme.of(context).secondaryHeaderColor,
-            onPressed: () => {},
+            onPressed: () => {_backupModal(context)},
           ),
         ],
       ),
