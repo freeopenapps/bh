@@ -5,10 +5,15 @@ import 'package:provider/provider.dart';
 import '../providers/entry_list.dart';
 
 class AppBarTitle extends StatefulWidget {
+  final double screenWidth;
   final String title;
   final String version;
 
-  AppBarTitle({this.title, this.version});
+  AppBarTitle({
+    this.screenWidth,
+    this.title,
+    this.version,
+  });
   @override
   _AppBarTitleState createState() => _AppBarTitleState();
 }
@@ -71,7 +76,6 @@ class _AppBarTitleState extends State<AppBarTitle> {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.center,
-      // height: 200,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

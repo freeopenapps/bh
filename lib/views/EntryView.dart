@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../constants.dart';
+
 import '../widgets/AppBarTitle.dart';
 import '../models/Entry.dart';
 import '../widgets/AddEntry.dart';
@@ -46,9 +48,12 @@ class _EntryViewState extends State<EntryView> {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
+        toolbarHeight: screenWidth >= ScreenWidth.small ? 100 : 60,
         title: AppBarTitle(
+          screenWidth: screenWidth,
           title: widget.title,
           version: widget.version,
         ),
