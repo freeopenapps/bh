@@ -89,43 +89,56 @@ class _BHAppBarState extends State<BHAppBar> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  ElevatedButton(
-                    child: Text(
-                      DateFormat.yMd().format(_startDate),
-                    ),
-                    onPressed: () {
-                      _showDatePicker('start');
-                    },
-                    autofocus: true,
-                    clipBehavior: Clip.antiAlias,
-                    style: ElevatedButton.styleFrom(
-                      side: BorderSide(
-                        width: 0.5,
-                        color: Colors.black,
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ElevatedButton(
+                      child: Text(
+                        DateFormat.yMd().format(_startDate),
                       ),
-                      primary: Theme.of(context).buttonColor.withOpacity(0.6),
+                      onPressed: () {
+                        _showDatePicker('start');
+                      },
+                      autofocus: true,
+                      clipBehavior: Clip.antiAlias,
+                      style: ElevatedButton.styleFrom(
+                        side: BorderSide(
+                          width: 0.5,
+                          color: Colors.black,
+                        ),
+                        primary: Theme.of(context).buttonColor.withOpacity(0.6),
+                      ),
                     ),
                   ),
-                  ElevatedButton(
-                    child: Text(
-                      DateFormat.yMd().format(_endDate),
-                    ),
-                    onPressed: () {
-                      _showDatePicker('end');
-                    },
-                    autofocus: true,
-                    clipBehavior: Clip.antiAlias,
-                    style: ElevatedButton.styleFrom(
-                      side: BorderSide(
-                        width: 0.5,
-                        color: Colors.black,
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ElevatedButton(
+                      child: Text(
+                        DateFormat.yMd().format(_endDate),
                       ),
-                      primary: Theme.of(context).buttonColor.withOpacity(0.6),
+                      onPressed: () {
+                        _showDatePicker('end');
+                      },
+                      autofocus: true,
+                      clipBehavior: Clip.antiAlias,
+                      style: ElevatedButton.styleFrom(
+                        side: BorderSide(
+                          width: 0.5,
+                          color: Colors.black,
+                        ),
+                        primary: Theme.of(context).buttonColor.withOpacity(0.6),
+                      ),
                     ),
                   ),
                 ],
               ),
             ],
+          ),
+          IconButton(
+            icon: Icon(Icons.settings),
+            iconSize: 40,
+            tooltip: 'Settings',
+            color: Theme.of(context).secondaryHeaderColor,
+            onPressed: () => {},
           ),
         ],
       ),
