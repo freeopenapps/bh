@@ -4,16 +4,16 @@ import 'package:provider/provider.dart';
 
 import '../providers/entry_list.dart';
 
-class BHAppBar extends StatefulWidget {
+class AppBarTitle extends StatefulWidget {
   final String title;
   final String version;
 
-  BHAppBar({this.title, this.version});
+  AppBarTitle({this.title, this.version});
   @override
-  _BHAppBarState createState() => _BHAppBarState();
+  _AppBarTitleState createState() => _AppBarTitleState();
 }
 
-class _BHAppBarState extends State<BHAppBar> {
+class _AppBarTitleState extends State<AppBarTitle> {
   DateTime _startDate = DateTime(
     DateTime.now().year,
     DateTime.now().month,
@@ -71,6 +71,7 @@ class _BHAppBarState extends State<BHAppBar> {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.center,
+      // height: 200,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

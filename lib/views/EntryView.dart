@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../widgets/BHAppBar.dart';
+import '../widgets/AppBarTitle.dart';
 import '../models/Entry.dart';
 import '../widgets/AddEntry.dart';
 import '../widgets/EditEntry.dart';
@@ -48,10 +48,11 @@ class _EntryViewState extends State<EntryView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: BHAppBar(
-        title: widget.title,
-        version: widget.version,
-      )),
+        title: AppBarTitle(
+          title: widget.title,
+          version: widget.version,
+        ),
+      ),
       body: Column(
         children: [
           EntryRows(_editEntryModal, context),
