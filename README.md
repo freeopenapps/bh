@@ -13,7 +13,9 @@
 - Free forever
 
 # Specifications
-- Android / iOS 
+- Android
+  - Build: flutter build apk --split-per-abi
+  - Install: flutter install
 - No Web due to SQflite dependency
 
 
