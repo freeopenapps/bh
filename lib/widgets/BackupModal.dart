@@ -1,6 +1,9 @@
 import '../strings.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+
+import '../providers/entry_list.dart';
 
 class BackupModal extends StatefulWidget {
   @override
@@ -76,29 +79,51 @@ class _BackupModalState extends State<BackupModal> {
 
   void _createBackup(context) {
     Navigator.of(context).pop();
+
+    // Provider.of<EntryListProvider>(
+    //   context,
+    //   listen: false,
+    // ).backUp().then((res) {
     _messageDialog(
       context,
       BackupModalStrings.backupCreatedDialogTitle,
       BackupModalStrings.backupCreatedDialogMsg,
     );
+    // });
   }
 
   void _createFullBackup(context) {
     Navigator.of(context).pop();
-    _messageDialog(
+
+    Provider.of<EntryListProvider>(
       context,
-      BackupModalStrings.backupFullCreatedDialogTitle,
-      BackupModalStrings.backupFullCreatedDialogMsg,
-    );
+      listen: false,
+    ).backUp().then((res) {
+      _messageDialog(
+        context,
+        BackupModalStrings.backupFullCreatedDialogTitle,
+        BackupModalStrings.backupFullCreatedDialogMsg,
+      );
+    }).catchError((onError) {
+      print(onError);
+    });
   }
 
   void _loadBackup(context) {
     Navigator.of(context).pop();
-    _messageDialog(
+
+    Provider.of<EntryListProvider>(
       context,
-      BackupModalStrings.backupLoadedDialogTitle,
-      BackupModalStrings.backupLoadedDialogMsg,
-    );
+      listen: false,
+    ).restore().then((res) {
+      _messageDialog(
+        context,
+        BackupModalStrings.backupLoadedDialogTitle,
+        BackupModalStrings.backupLoadedDialogMsg,
+      );
+    }).catchError((onError) {
+      print(onError);
+    });
   }
 
   @override

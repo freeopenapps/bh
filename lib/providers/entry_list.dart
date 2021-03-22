@@ -56,7 +56,7 @@ class EntryListProvider extends ChangeNotifier {
     _entries.map((e) => Entry.toFile(e));
   }
 
-  void restore() async {
+  Future<void> restore() async {
     await _init();
     Directory path = Directory(await Entry.getFileDir());
 
