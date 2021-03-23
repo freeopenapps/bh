@@ -9,7 +9,7 @@ void main() {
 }
 
 class AppRoot extends StatelessWidget {
-  final String version = 'v1.0.0';
+  final String version = 'v1.0.1';
   final String title = 'Blood Hound ';
 
   @override

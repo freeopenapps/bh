@@ -2,7 +2,6 @@ import 'dart:io';
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:path/path.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:uuid/uuid.dart';
 import 'package:ext_storage/ext_storage.dart';
@@ -108,8 +107,13 @@ class Entry {
   }
 
   static String getFileName(Entry entry) {
+    // Output:  2021-03-17_11-00-00_000.a82bfe9f-0b28-4f2c-a0d2-3f2c41305c10.json
     String a = entry.date.toString().split(' ')[0];
-    String b = entry.date.toString().split(' ')[1];
-    return a + '.' + b + '.' + entry.id + '.json';
+    String b = entry.date
+        .toString()
+        .split(' ')[1]
+        .replaceAll('.', '_')
+        .replaceAll(':', '-');
+    return a + '_' + b + '.' + entry.id + '.json';
   }
 }
