@@ -110,7 +110,7 @@ class _AppBarTitleState extends State<AppBarTitle> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(1.0),
                       child: ElevatedButton(
                         child: Text(
                           DateFormat.yMd().format(_startDate),
@@ -123,7 +123,7 @@ class _AppBarTitleState extends State<AppBarTitle> {
                         style: Theme.of(context).elevatedButtonTheme.style,
                       )),
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(1.0),
                     child: ElevatedButton(
                       child: Text(
                         DateFormat.yMd().format(_endDate),

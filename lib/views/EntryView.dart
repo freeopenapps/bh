@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../constants.dart';
-
+import '../theme.dart';
 import '../widgets/AppBarTitle.dart';
 import '../models/Entry.dart';
 import '../widgets/AddEntry.dart';
@@ -49,24 +49,31 @@ class _EntryViewState extends State<EntryView> {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: screenWidth >= ScreenWidth.small ? 100 : 60,
-        title: AppBarTitle(
-          screenWidth: screenWidth,
-          title: widget.title,
-          version: widget.version,
+    /**
+     * Note: Nested MaterialApp here to be able to use 
+     * MediaQuery for theme selection
+     */
+    return MaterialApp(
+      theme: screenWidth > ScreenWidth.small ? mediumTheme : smallTheme,
+      home: Scaffold(
+        appBar: AppBar(
+          toolbarHeight: screenWidth >= ScreenWidth.small ? 100 : 60,
+          title: AppBarTitle(
+            screenWidth: screenWidth,
+            title: widget.title,
+            version: widget.version,
+          ),
         ),
-      ),
-      body: Column(
-        children: [
-          EntryRows(_editEntryModal, context),
-        ],
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () => _newEntryModal(context),
+        body: Column(
+          children: [
+            EntryRows(_editEntryModal, context),
+          ],
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.add),
+          onPressed: () => _newEntryModal(context),
+        ),
       ),
     );
   }

@@ -2,7 +2,7 @@ import 'dart:io';
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:path/path.dart';
-import 'package:downloads_path_provider/downloads_path_provider.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:uuid/uuid.dart';
 
@@ -56,21 +56,36 @@ class Entry {
   }
 
   static Future<String> getFileDir() async {
+    // print("Getting permissions!");
     if (await Permission.storage.request().isGranted) {
-      Directory tempDir = await DownloadsPathProvider.downloadsDirectory;
-      String tempPath = tempDir.path;
-      return join(tempPath, 'bloodhound');
+      try {
+        Directory tempDir = await getApplicationDocumentsDirectory();
+        return tempDir.path;
+      } on Exception catch (e) {
+        print('getFileDir: ERROR:\n');
+        print(e);
+      }
     }
     return '';
   }
 
   static Future<void> toFile(Entry entry) async {
     /** Write a json file <id>.json for given Entry*/
-    String path = await getFileDir();
-    if (path != '') {
-      var fullPath = join(await getFileDir(), entry.id + '.json');
-      File f = File(fullPath);
-      f.writeAsString(json.encode(entry.toMap()));
+    try {
+      String path = await getFileDir();
+      // print('\n\ntoFile: PATH:');
+      // print(path);
+      if (path != '') {
+        var fullPath = join(path, Entry.getFileName(entry));
+        // print('Writing file: ' + fullPath);
+        File f = File(fullPath);
+        // print(f.path);
+        await f.writeAsString(json.encode(entry.toMap()));
+        // await File(fullPath).exists().then((value) => print(value));
+      }
+    } on Exception catch (e) {
+      print('toFile: ERROR\n');
+      print(e.toString());
     }
   }
 
@@ -79,5 +94,11 @@ class Entry {
     File f = File(path);
     String data = await f.readAsString();
     return Entry.fromMap(json.decode(data));
+  }
+
+  static String getFileName(Entry entry) {
+    String a = entry.date.toString().split(' ')[0];
+    String b = entry.date.toString().split(' ')[1];
+    return a + '.' + b + '.' + entry.id + '.json';
   }
 }

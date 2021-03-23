@@ -77,165 +77,184 @@ class _BackupModalState extends State<BackupModal> {
     );
   }
 
-  void _createBackup(context) {
+  void _selectiveBackup(context) async {
     Navigator.of(context).pop();
-
-    // Provider.of<EntryListProvider>(
-    //   context,
-    //   listen: false,
-    // ).backUp().then((res) {
-    _messageDialog(
+    await Provider.of<EntryListProvider>(
       context,
-      BackupModalStrings.backupCreatedDialogTitle,
-      BackupModalStrings.backupCreatedDialogMsg,
-    );
-    // });
+      listen: false,
+    ).setRange(_startDate, _endDate);
+
+    await Provider.of<EntryListProvider>(
+      context,
+      listen: false,
+    ).backUp().then((res) {
+      _messageDialog(
+        context,
+        BackupModalStrings.selBackupDialogTitle,
+        BackupModalStrings.selBackupDialogMsg,
+      );
+    }).catchError((onError) {
+      print('_selectiveBackup(): Error\n');
+      print(onError);
+    });
   }
 
-  void _createFullBackup(context) {
+  void _fullBackup(context) {
     Navigator.of(context).pop();
-
     Provider.of<EntryListProvider>(
       context,
       listen: false,
     ).backUp().then((res) {
       _messageDialog(
         context,
-        BackupModalStrings.backupFullCreatedDialogTitle,
-        BackupModalStrings.backupFullCreatedDialogMsg,
+        BackupModalStrings.fullBackupDialogTitle,
+        BackupModalStrings.fullBackupDialogMsg,
       );
     }).catchError((onError) {
+      print('_fullBackup(): Error\n');
       print(onError);
     });
   }
 
-  void _loadBackup(context) {
-    Navigator.of(context).pop();
-
-    Provider.of<EntryListProvider>(
+  void _restore(context) async {
+    await Provider.of<EntryListProvider>(
       context,
       listen: false,
     ).restore().then((res) {
+      Navigator.of(context).pop();
+
       _messageDialog(
         context,
-        BackupModalStrings.backupLoadedDialogTitle,
-        BackupModalStrings.backupLoadedDialogMsg,
+        BackupModalStrings.restoreDialogTitle,
+        BackupModalStrings.restoreDialogMsg,
       );
     }).catchError((onError) {
+      print('_restore(): Error\n');
       print(onError);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    const double padding = 12.0;
+    const double padding = 18.0;
     return SingleChildScrollView(
-      child: Column(
-        // padding: EdgeInsets.all(30),
-        children: <Widget>[
-          Card(
-            child: Column(
-              children: [
-                Text(
-                  BackupModalStrings.backupTitle,
-                  style: Theme.of(context).textTheme.headline1,
-                ),
-                Text(
-                  BackupModalStrings.dateRange,
-                  style: Theme.of(context).textTheme.headline2,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(padding),
-                      child: ElevatedButton(
-                        child: Text(
-                          DateFormat.yMd().format(_startDate),
+      child: Padding(
+        padding: const EdgeInsets.all(padding),
+        child: Column(
+          // padding: EdgeInsets.all(30),
+          children: <Widget>[
+            Card(
+              child: Column(
+                children: [
+                  Text(
+                    BackupModalStrings.selBackupTitle,
+                    style: Theme.of(context).textTheme.headline1,
+                  ),
+                  Text(
+                    BackupModalStrings.selBackupRange,
+                    style: Theme.of(context).textTheme.headline2,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.all(2),
+                        child: ElevatedButton(
+                          child: Text(
+                            DateFormat.yMd().format(_startDate),
+                          ),
+                          onPressed: () => {_showDatePicker('start')},
+                          // autofocus: true,
+                          clipBehavior: Clip.antiAlias,
+                          style: Theme.of(context).elevatedButtonTheme.style,
                         ),
-                        onPressed: () => {_showDatePicker('start')},
-                        // autofocus: true,
-                        clipBehavior: Clip.antiAlias,
-                        style: Theme.of(context).elevatedButtonTheme.style,
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(padding),
-                      child: ElevatedButton(
-                        child: Text(
-                          DateFormat.yMd().format(_endDate),
+                      Padding(
+                        padding: const EdgeInsets.all(2),
+                        child: ElevatedButton(
+                          child: Text(
+                            DateFormat.yMd().format(_endDate),
+                          ),
+                          onPressed: () => {_showDatePicker('end')},
+                          // autofocus: true,
+                          clipBehavior: Clip.antiAlias,
+                          style: Theme.of(context).elevatedButtonTheme.style,
                         ),
-                        onPressed: () => {_showDatePicker('end')},
-                        // autofocus: true,
-                        clipBehavior: Clip.antiAlias,
-                        style: Theme.of(context).elevatedButtonTheme.style,
                       ),
+                    ],
+                  ),
+                  Text(
+                    BackupModalStrings.selBackupMsg,
+                    style: Theme.of(context).textTheme.headline2,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(padding),
+                    child: ElevatedButton(
+                      child: Text(BackupModalStrings.selBackupBtn),
+                      style: Theme.of(context).elevatedButtonTheme.style,
+                      onPressed: () => {_selectiveBackup(context)},
+                      autofocus: true,
+                      clipBehavior: Clip.antiAlias,
                     ),
-                  ],
-                ),
-                Text(
-                  BackupModalStrings.createBackup,
-                  style: Theme.of(context).textTheme.headline2,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(padding),
-                  child: ElevatedButton(
-                    child: Text(BackupModalStrings.createBtn),
-                    style: Theme.of(context).elevatedButtonTheme.style,
-                    onPressed: () => {_createBackup(context)},
-                    autofocus: true,
-                    clipBehavior: Clip.antiAlias,
                   ),
-                ),
-                Text(
-                  BackupModalStrings.fullBackup,
-                  style: Theme.of(context).textTheme.headline2,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(padding),
-                  child: ElevatedButton(
-                    child: Text(BackupModalStrings.createAllBtn),
-                    style: Theme.of(context).elevatedButtonTheme.style,
-                    onPressed: () => {_createFullBackup(context)},
-                    autofocus: true,
-                    clipBehavior: Clip.antiAlias,
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          Card(
-            child: Column(
-              children: <Widget>[
-                Text(
-                  BackupModalStrings.restoreTitle,
-                  style: Theme.of(context).textTheme.headline1,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      BackupModalStrings.loadBackup,
-                      style: Theme.of(context).textTheme.headline2,
-                    ),
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(padding),
-                  child: ElevatedButton(
-                    child: Text(BackupModalStrings.loadBtn),
-                    style: Theme.of(context).elevatedButtonTheme.style,
-                    onPressed: () => {_loadBackup(context)},
-                    autofocus: true,
-                    clipBehavior: Clip.antiAlias,
+            Card(
+              child: Column(
+                children: <Widget>[
+                  Text(
+                    BackupModalStrings.fullBackupTitle,
+                    style: Theme.of(context).textTheme.headline1,
                   ),
-                ),
-              ],
+                  Text(
+                    BackupModalStrings.fullBackupMsg,
+                    style: Theme.of(context).textTheme.headline2,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ElevatedButton(
+                        child: Text(BackupModalStrings.fullBackupBtn),
+                        style: Theme.of(context).elevatedButtonTheme.style,
+                        onPressed: () => {_fullBackup(context)},
+                        autofocus: true,
+                        clipBehavior: Clip.antiAlias,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+            Card(
+              child: Column(
+                children: <Widget>[
+                  Text(
+                    BackupModalStrings.restoreTitle,
+                    style: Theme.of(context).textTheme.headline1,
+                  ),
+                  Text(
+                    BackupModalStrings.restoreMsg,
+                    style: Theme.of(context).textTheme.headline2,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ElevatedButton(
+                        child: Text(BackupModalStrings.restoreBtn),
+                        style: Theme.of(context).elevatedButtonTheme.style,
+                        onPressed: () => {_restore(context)},
+                        autofocus: true,
+                        clipBehavior: Clip.antiAlias,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -25,7 +25,7 @@ class EntryListProvider extends ChangeNotifier {
   }
 
   //============= API
-  void setRange(DateTime start, DateTime end) async {
+  Future<void> setRange(DateTime start, DateTime end) async {
     await _init();
     _entries = _entries
         .where((e) =>
@@ -53,20 +53,35 @@ class EntryListProvider extends ChangeNotifier {
   //============= Backup / Restore API
   Future<void> backUp() async {
     await _init();
-    _entries.map((e) => Entry.toFile(e));
+    _entries.forEach((e) {
+      // print('Backing up: ' + e.id);
+      Entry.toFile(e);
+    });
+
+    notifyListeners();
   }
 
   Future<void> restore() async {
     await _init();
     Directory path = Directory(await Entry.getFileDir());
+    // print('\n\nRESTORE(): PATH:');
+    // print(path);
 
-    // Get files with uuid names
-    List<FileSystemEntity> files = await path
-        .list()
-        .where((obj) => isUUID(basename(obj.path.split('.')[0])))
-        .toList();
+    List<FileSystemEntity> files = await path.list().where((obj) {
+      var elems = obj.path.split('.');
+      if (elems.length > 5) {
+        return isUUID(basename(elems[5]));
+      }
+      return false;
+    }).toList();
+
+    // files.forEach((f) {
+    //   print('Found: ' + f.path);
+    // });
 
     // Create entries from the files
-    files.map((e) async => DBAPI.insert(await Entry.fromFile(e.path)));
+    files.forEach((f) async => DBAPI.insert(await Entry.fromFile(f.path)));
+
+    notifyListeners();
   }
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'theme.dart';
 import './views/EntryView.dart';
 import './providers/entry_list.dart';
 
@@ -19,7 +18,6 @@ class AppRoot extends StatelessWidget {
       create: (ctx) => EntryListProvider(),
       child: MaterialApp(
         title: title,
-        theme: appTheme,
         home: EntryView(
           title: title,
           version: version,
