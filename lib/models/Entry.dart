@@ -5,6 +5,7 @@ import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:uuid/uuid.dart';
+import 'package:ext_storage/ext_storage.dart';
 
 class Entry {
   String id;
@@ -59,8 +60,18 @@ class Entry {
     // print("Getting permissions!");
     if (await Permission.storage.request().isGranted) {
       try {
-        Directory tempDir = await getApplicationDocumentsDirectory();
-        return tempDir.path;
+        // Directory tempDir = await getApplicationDocumentsDirectory();
+        var tempDir = await ExtStorage.getExternalStoragePublicDirectory(
+            ExtStorage.DIRECTORY_DOWNLOADS);
+        Directory _tgt = Directory(join(tempDir, 'BloodHoundApp'));
+        if (await _tgt.exists()) {
+          // print('DIRECTORY FOUND: ${_tgt.path}');
+          return _tgt.path;
+        } else {
+          final Directory _newTgt = await _tgt.create(recursive: true);
+          // print('DIRECTORY CREATED: ${_newTgt.path}');
+          return _newTgt.path;
+        }
       } on Exception catch (e) {
         print('getFileDir: ERROR:\n');
         print(e);

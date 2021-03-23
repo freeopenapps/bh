@@ -121,13 +121,12 @@ class _BackupModalState extends State<BackupModal> {
       context,
       listen: false,
     ).restore().then((res) {
-      Navigator.of(context).pop();
-
       _messageDialog(
         context,
         BackupModalStrings.restoreDialogTitle,
         BackupModalStrings.restoreDialogMsg,
       );
+      Navigator.of(context).pop();
     }).catchError((onError) {
       print('_restore(): Error\n');
       print(onError);
@@ -143,64 +142,64 @@ class _BackupModalState extends State<BackupModal> {
         child: Column(
           // padding: EdgeInsets.all(30),
           children: <Widget>[
-            Card(
-              child: Column(
-                children: [
-                  Text(
-                    BackupModalStrings.selBackupTitle,
-                    style: Theme.of(context).textTheme.headline1,
-                  ),
-                  Text(
-                    BackupModalStrings.selBackupRange,
-                    style: Theme.of(context).textTheme.headline2,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.all(2),
-                        child: ElevatedButton(
-                          child: Text(
-                            DateFormat.yMd().format(_startDate),
-                          ),
-                          onPressed: () => {_showDatePicker('start')},
-                          // autofocus: true,
-                          clipBehavior: Clip.antiAlias,
-                          style: Theme.of(context).elevatedButtonTheme.style,
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(2),
-                        child: ElevatedButton(
-                          child: Text(
-                            DateFormat.yMd().format(_endDate),
-                          ),
-                          onPressed: () => {_showDatePicker('end')},
-                          // autofocus: true,
-                          clipBehavior: Clip.antiAlias,
-                          style: Theme.of(context).elevatedButtonTheme.style,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Text(
-                    BackupModalStrings.selBackupMsg,
-                    style: Theme.of(context).textTheme.headline2,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(padding),
-                    child: ElevatedButton(
-                      child: Text(BackupModalStrings.selBackupBtn),
-                      style: Theme.of(context).elevatedButtonTheme.style,
-                      onPressed: () => {_selectiveBackup(context)},
-                      autofocus: true,
-                      clipBehavior: Clip.antiAlias,
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            // Card(
+            //   child: Column(
+            //     children: [
+            //       Text(
+            //         BackupModalStrings.selBackupTitle,
+            //         style: Theme.of(context).textTheme.headline1,
+            //       ),
+            //       Text(
+            //         BackupModalStrings.selBackupRange,
+            //         style: Theme.of(context).textTheme.headline2,
+            //       ),
+            //       Row(
+            //         mainAxisAlignment: MainAxisAlignment.center,
+            //         crossAxisAlignment: CrossAxisAlignment.center,
+            //         children: <Widget>[
+            //           Padding(
+            //             padding: const EdgeInsets.all(2),
+            //             child: ElevatedButton(
+            //               child: Text(
+            //                 DateFormat.yMd().format(_startDate),
+            //               ),
+            //               onPressed: () => {_showDatePicker('start')},
+            //               // autofocus: true,
+            //               clipBehavior: Clip.antiAlias,
+            //               style: Theme.of(context).elevatedButtonTheme.style,
+            //             ),
+            //           ),
+            //           Padding(
+            //             padding: const EdgeInsets.all(2),
+            //             child: ElevatedButton(
+            //               child: Text(
+            //                 DateFormat.yMd().format(_endDate),
+            //               ),
+            //               onPressed: () => {_showDatePicker('end')},
+            //               // autofocus: true,
+            //               clipBehavior: Clip.antiAlias,
+            //               style: Theme.of(context).elevatedButtonTheme.style,
+            //             ),
+            //           ),
+            //         ],
+            //       ),
+            //       Text(
+            //         BackupModalStrings.selBackupMsg,
+            //         style: Theme.of(context).textTheme.headline2,
+            //       ),
+            //       Padding(
+            //         padding: const EdgeInsets.all(padding),
+            //         child: ElevatedButton(
+            //           child: Text(BackupModalStrings.selBackupBtn),
+            //           style: Theme.of(context).elevatedButtonTheme.style,
+            //           onPressed: () => {_selectiveBackup(context)},
+            //           autofocus: true,
+            //           clipBehavior: Clip.antiAlias,
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            // ),
             Card(
               child: Column(
                 children: <Widget>[

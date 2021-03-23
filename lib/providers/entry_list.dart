@@ -69,8 +69,9 @@ class EntryListProvider extends ChangeNotifier {
 
     List<FileSystemEntity> files = await path.list().where((obj) {
       var elems = obj.path.split('.');
-      if (elems.length > 5) {
-        return isUUID(basename(elems[5]));
+      // print(elems);
+      if (elems.length > 3) {
+        return isUUID(basename(elems[3]));
       }
       return false;
     }).toList();
@@ -82,6 +83,7 @@ class EntryListProvider extends ChangeNotifier {
     // Create entries from the files
     files.forEach((f) async => DBAPI.insert(await Entry.fromFile(f.path)));
 
-    notifyListeners();
+    // Refresh the entries list
+    await _init();
   }
 }
