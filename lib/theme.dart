@@ -26,6 +26,10 @@ final mediumTheme = ThemeData(
         fontSize: 22.0,
         fontWeight: FontWeight.w300,
       ),
+      headline3: TextStyle(
+        fontSize: 1.0,
+        fontWeight: FontWeight.w100,
+      ),
       bodyText1: TextStyle(
         fontSize: 14.0,
         fontWeight: FontWeight.w200,

@@ -121,10 +121,22 @@ class EntryRows extends StatelessWidget {
                   ),
                   Container(
                     padding: EdgeInsets.all(5),
+                    height: 70,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        Text(notifier.entries[index].note),
+                        Expanded(
+                          child: Text(
+                            notifier.entries[index].note,
+                            maxLines: 4,
+                            overflow: TextOverflow.clip,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                     decoration: BoxDecoration(

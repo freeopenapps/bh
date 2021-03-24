@@ -54,7 +54,7 @@ class EntryListProvider extends ChangeNotifier {
   Future<void> backUp() async {
     await _init();
     _entries.forEach((e) {
-      print('Backing up: ' + e.id);
+      // print('Backing up: ' + e.id);
       Entry.toFile(e);
     });
 
@@ -69,6 +69,15 @@ class EntryListProvider extends ChangeNotifier {
     Directory path = Directory(await Entry.getFileDir());
     // print('\n\nRESTORE(): PATH:');
     // print(path);
+
+    // List<FileSystemEntity> files = await path.list().where((obj) {
+    //   var elems = obj.path.split('.');
+    //   // print(elems);
+    //   if (elems.length > 4) {
+    //     return isUUID(elems[3]);
+    //   }
+    //   return false;
+    // }).toList();
 
     List<FileSystemEntity> files = await path.list().where((obj) {
       var elems = obj.path.split('.');
