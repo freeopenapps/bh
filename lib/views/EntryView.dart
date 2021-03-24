@@ -54,7 +54,12 @@ class _EntryViewState extends State<EntryView> {
      * MediaQuery for theme selection
      */
     return MaterialApp(
-      theme: screenWidth > ScreenWidth.small ? mediumTheme : smallTheme,
+      // theme: screenWidth > ScreenWidth.small ? mediumTheme : smallTheme,
+      // theme: ThemeData(
+      //   primarySwatch: Colors.orange,
+      // ),
+      theme: redrum(),
+      // theme: mediumTheme('dark'),
       home: Scaffold(
         appBar: AppBar(
           toolbarHeight: screenWidth >= ScreenWidth.small ? 100 : 60,

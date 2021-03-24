@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/entry_list.dart';
+import '../theme.dart';
 
 class AddEntry extends StatefulWidget {
   @override
@@ -80,6 +81,7 @@ class _AddEntryState extends State<AddEntry> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = redrum();
     return SingleChildScrollView(
       child: Container(
         padding: EdgeInsets.all(30),
@@ -120,26 +122,20 @@ class _AddEntryState extends State<AddEntry> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   ElevatedButton(
+                    style: theme.elevatedButtonTheme.style,
                     child: Text(
                       DateFormat.yMd().format(_selectedDate),
                     ),
                     onPressed: _showDatePicker,
-                    // autofocus: true,
                     clipBehavior: Clip.antiAlias,
-                    style: ElevatedButton.styleFrom(
-                      primary: Theme.of(context).buttonColor,
-                    ),
                   ),
                   ElevatedButton(
+                    style: theme.elevatedButtonTheme.style,
                     child: Text(
                       _selectedTime.format(context),
                     ),
                     onPressed: _showTimePicker,
-                    // autofocus: true,
                     clipBehavior: Clip.antiAlias,
-                    style: ElevatedButton.styleFrom(
-                      primary: Theme.of(context).buttonColor,
-                    ),
                   )
                 ],
               ),
@@ -148,12 +144,9 @@ class _AddEntryState extends State<AddEntry> {
               padding: EdgeInsets.all(10),
               width: 600,
               child: ElevatedButton(
+                style: theme.elevatedButtonTheme.style,
                 child: Text('Create Entry'),
-                style: ElevatedButton.styleFrom(
-                  primary: Theme.of(context).buttonColor,
-                ),
                 onPressed: () => _submitEntry(),
-                autofocus: true,
                 clipBehavior: Clip.antiAlias,
               ),
             ),

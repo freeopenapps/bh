@@ -2,7 +2,6 @@ import 'dart:io';
 import 'dart:collection';
 import 'package:validators/validators.dart';
 import 'package:flutter/foundation.dart';
-import 'package:path/path.dart';
 
 import '../models/Entry.dart';
 import '../data/db_api.dart';
@@ -69,15 +68,6 @@ class EntryListProvider extends ChangeNotifier {
     Directory path = Directory(await Entry.getFileDir());
     // print('\n\nRESTORE(): PATH:');
     // print(path);
-
-    // List<FileSystemEntity> files = await path.list().where((obj) {
-    //   var elems = obj.path.split('.');
-    //   // print(elems);
-    //   if (elems.length > 4) {
-    //     return isUUID(elems[3]);
-    //   }
-    //   return false;
-    // }).toList();
 
     List<FileSystemEntity> files = await path.list().where((obj) {
       var elems = obj.path.split('.');
