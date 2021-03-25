@@ -6,6 +6,25 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:uuid/uuid.dart';
 import 'package:ext_storage/ext_storage.dart';
 
+import 'package:file/file.dart';
+import 'package:file/memory.dart';
+import 'package:file/local.dart';
+
+class PermissionManager {
+  /// Wrapper class to facilitate mocking during testing
+  Future<bool> storage() async {
+    return await Permission.storage.request().isGranted;
+  }
+}
+
+class PathManager {
+  /// Wrapper class to facilitate mocking during testing
+  Future<String> downloadsPath() async {
+    return await ExtStorage.getExternalStoragePublicDirectory(
+        ExtStorage.DIRECTORY_DOWNLOADS);
+  }
+}
+
 class Entry {
   String id;
   String date; // DateTime.toUtc()
@@ -55,19 +74,36 @@ class Entry {
     );
   }
 
-  static Future<String> getFileDir() async {
+  static Future<String> getFileDir(
+    PermissionManager perMan,
+    PathManager pathMan, {
+    fsLocal = true,
+  }) async {
+    // Select FileSystem
+    // Local works on device FS. For builds.
+    // Memory creates FS in memory. For testing.
+    FileSystem fs;
+    if (fsLocal) {
+      fs = LocalFileSystem();
+    } else {
+      fs = MemoryFileSystem();
+    }
+
     // print("Getting permissions!");
-    if (await Permission.storage.request().isGranted) {
+    if (await perMan.storage()) {
       try {
         // Directory tempDir = await getApplicationDocumentsDirectory();
-        var tempDir = await ExtStorage.getExternalStoragePublicDirectory(
-            ExtStorage.DIRECTORY_DOWNLOADS);
-        Directory _tgt = Directory(join(tempDir, 'BloodHoundApp'));
+        String tempDir = await pathMan.downloadsPath();
+        Directory _tgt = fs.directory(
+          join(tempDir, 'BloodHoundApp'),
+        );
         if (await _tgt.exists()) {
           // print('DIRECTORY FOUND: ${_tgt.path}');
           return _tgt.path;
         } else {
-          final Directory _newTgt = await _tgt.create(recursive: true);
+          final Directory _newTgt = await _tgt.create(
+            recursive: true,
+          );
           // print('DIRECTORY CREATED: ${_newTgt.path}');
           return _newTgt.path;
         }
