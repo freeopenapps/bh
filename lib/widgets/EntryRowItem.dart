@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../theme.dart';
+import '../constants.dart';
 
 class EntryRowItem extends StatelessWidget {
   final String title;
@@ -19,24 +20,24 @@ class EntryRowItem extends StatelessWidget {
       textDirection: TextDirection.ltr,
       child: Expanded(
         child: Container(
-          margin: EdgeInsets.symmetric(vertical: 8, horizontal: 1),
-          padding: EdgeInsets.all(2),
+          margin: EdgeInsets.symmetric(
+            vertical: EntryRowItemConsts.containerMarginVertical,
+            horizontal: EntryRowItemConsts.containerMarginHorizontal,
+          ),
+          padding: EdgeInsets.all(EntryRowItemConsts.containerPadding),
           child: Column(
             children: <Widget>[
               Text(
                 this.title,
-                style: theme.textTheme.headline3,
+                style: theme.textTheme.headline4,
               ),
               Text(
                 this.value,
-                style: theme.textTheme.headline1.copyWith(
-                  fontSize: 19.0,
-                  fontWeight: FontWeight.w500,
-                ),
+                style: theme.textTheme.headline3,
               ),
               Text(
                 this.units,
-                style: theme.textTheme.headline3,
+                style: theme.textTheme.headline4,
               ),
             ],
           ),

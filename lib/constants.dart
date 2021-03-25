@@ -38,3 +38,10 @@ class EditEntryConsts {
   static const btnPadding = 10.0;
   static const btnWidth = 600.0;
 }
+
+class EntryRowItemConsts {
+  static const containerMarginVertical = 8.0;
+  static const containerMarginHorizontal = 1.0;
+
+  static const containerPadding = 2.0;
+}

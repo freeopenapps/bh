@@ -30,17 +30,21 @@ ThemeData mobileTheme() {
       ),
       headline2: TextStyle(
         fontFamily: 'Roboto',
+        fontSize: 19.0,
+        fontWeight: FontWeight.w500,
+      ),
+      headline3: TextStyle(
+        fontFamily: 'Roboto',
         fontSize: 18.0,
         fontWeight: FontWeight.w600,
       ),
-      headline3: TextStyle(
+      headline4: TextStyle(
         fontFamily: 'Roboto',
         fontSize: 15.0,
         fontWeight: FontWeight.w600,
       ),
-      headline4: TextStyle(
-        // fontFamily: 'OpenSans',
-        fontSize: 24.0,
+      headline5: TextStyle(
+        fontSize: 12.0,
         fontWeight: FontWeight.w500,
       ),
       bodyText1: TextStyle(
