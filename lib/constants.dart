@@ -45,3 +45,10 @@ class EntryRowItemConsts {
 
   static const containerPadding = 2.0;
 }
+
+class AppBarTitleConsts {
+  static const datePickerStartYear = 2020;
+
+  static const startOpt = 1;
+  static const endOpt = 2;
+}

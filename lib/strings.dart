@@ -20,10 +20,6 @@ class EntryRowsStrings {
   static const pressureUnits = 'dia/sys/bpm';
 }
 
-class EntryRowItemStrings {
-  static const name = '';
-}
-
 class EditEntryStrings {
   static const deleteDialogTitle = 'Delete Entry';
   static const deleteDialogCancelBtn = 'Cancel';

@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import '../providers/entry_list.dart';
 import '../theme.dart';
+import '../constants.dart';
 
 class AppBarTitle extends StatefulWidget {
   final double screenWidth;
@@ -39,11 +40,11 @@ class _AppBarTitleState extends State<AppBarTitle> {
     showDatePicker(
       context: context,
       initialDate: DateTime.now(),
-      firstDate: DateTime(2020),
+      firstDate: DateTime(AppBarTitleConsts.datePickerStartYear),
       lastDate: DateTime.now(),
     ).then((pickedDate) {
       if (pickedDate == null) return;
-      if (choice == 'start') {
+      if (choice == AppBarTitleConsts.startOpt) {
         setState(() {
           _startDate = DateTime(
             pickedDate.year,
@@ -54,7 +55,7 @@ class _AppBarTitleState extends State<AppBarTitle> {
           );
         });
       }
-      if (choice == 'end') {
+      if (choice == AppBarTitleConsts.endOpt) {
         setState(() {
           _endDate = DateTime(
             pickedDate.year,
@@ -83,10 +84,13 @@ class _AppBarTitleState extends State<AppBarTitle> {
         children: [
           Column(
             children: <Widget>[
-              Text(widget.title),
+              Text(
+                widget.title,
+                style: theme.textTheme.headline2,
+              ),
               Text(
                 widget.version,
-                textScaleFactor: 0.7,
+                style: theme.textTheme.headline5,
               ),
             ],
           ),
@@ -97,28 +101,32 @@ class _AppBarTitleState extends State<AppBarTitle> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.all(1.0),
+                    padding: const EdgeInsets.all(
+                      AppBarTitleConsts.dateBtnsPadding,
+                    ),
                     child: ElevatedButton(
                       child: Text(
                         DateFormat.yMd().format(_startDate),
                         style: theme.textTheme.button,
                       ),
                       onPressed: () {
-                        _showDatePicker('start');
+                        _showDatePicker(AppBarTitleConsts.startOpt);
                       },
                       clipBehavior: Clip.antiAlias,
                       style: theme.elevatedButtonTheme.style,
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(1.0),
+                    padding: const EdgeInsets.all(
+                      AppBarTitleConsts.dateBtnsPadding,
+                    ),
                     child: ElevatedButton(
                       child: Text(
                         DateFormat.yMd().format(_endDate),
                         style: theme.textTheme.button,
                       ),
                       onPressed: () {
-                        _showDatePicker('end');
+                        _showDatePicker(AppBarTitleConsts.endOpt);
                       },
                       clipBehavior: Clip.antiAlias,
                       style: theme.elevatedButtonTheme.style,
