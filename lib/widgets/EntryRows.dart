@@ -4,8 +4,9 @@ import 'package:intl/intl.dart';
 
 import '../providers/entry_list.dart';
 import 'EntryRowItem.dart';
-import '../models/Entry.dart';
 import '../theme.dart';
+import '../constants.dart';
+import '../strings.dart';
 
 class EntryRows extends StatelessWidget {
   final Function _editEntryModal;
@@ -16,7 +17,8 @@ class EntryRows extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = mobileTheme();
-    final height = MediaQuery.of(context).size.height - 170;
+    final height =
+        MediaQuery.of(context).size.height - EntryRowsConsts.displayHeightTrim;
     return Container(
       height: height,
       child: Consumer<EntryListProvider>(
@@ -24,8 +26,8 @@ class EntryRows extends StatelessWidget {
           itemCount: notifier.entries.length,
           itemBuilder: (ctx, index) {
             return Container(
-              padding: EdgeInsets.all(1),
-              margin: EdgeInsets.all(1),
+              padding: EdgeInsets.all(EntryRowsConsts.padding),
+              margin: EdgeInsets.all(EntryRowsConsts.margin),
               decoration: BoxDecoration(
                 border: Border.all(
                   color: Theme.of(context).primaryColorDark,
@@ -47,9 +49,9 @@ class EntryRows extends StatelessWidget {
                           decoration: BoxDecoration(
                             color: Theme.of(context)
                                 .backgroundColor
-                                .withOpacity(0.5),
+                                .withOpacity(EntryRowsConsts.dateBGOpacity),
                           ),
-                          padding: EdgeInsets.all(4),
+                          padding: EdgeInsets.all(EntryRowsConsts.datePadding),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -72,37 +74,37 @@ class EntryRows extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             EntryRowItem(
-                              title: 'Ketones',
+                              title: EntryRowsStrings.ketonesTitle,
                               value: notifier.entries[index].ketones,
-                              units: 'mmol/L',
+                              units: EntryRowsStrings.ketonesUnits,
                             ),
                             EntryRowItem(
-                              title: 'Glucose',
+                              title: EntryRowsStrings.glucoseTitle,
                               value: notifier.entries[index].glucose,
-                              units: 'mg/L',
+                              units: EntryRowsStrings.glucoseUnits,
                             ),
                             EntryRowItem(
-                              title: 'Weight',
+                              title: EntryRowsStrings.weightTitle,
                               value: notifier.entries[index].weight,
-                              units: 'lb',
+                              units: EntryRowsStrings.weightUnits,
                             ),
                             EntryRowItem(
-                              title: 'Pressure',
+                              title: EntryRowsStrings.pressureTitle,
                               value: notifier.entries[index].pressure,
-                              units: 'dia/sys/bpm',
+                              units: EntryRowsStrings.pressureUnits,
                             ),
                           ],
                         ),
                         Container(
-                          padding: EdgeInsets.all(5),
-                          height: 70,
+                          padding: EdgeInsets.all(EntryRowsConsts.notePadding),
+                          height: EntryRowsConsts.noteHeight,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               Expanded(
                                 child: Text(
                                   notifier.entries[index].note,
-                                  maxLines: 4,
+                                  maxLines: EntryRowsConsts.noteMaxLines,
                                   overflow: TextOverflow.clip,
                                   textAlign: TextAlign.center,
                                   style: theme.textTheme.headline4,
@@ -113,7 +115,7 @@ class EntryRows extends StatelessWidget {
                           decoration: BoxDecoration(
                             color: Theme.of(context)
                                 .backgroundColor
-                                .withOpacity(0.3),
+                                .withOpacity(EntryRowsConsts.noteBGOpacity),
                           ),
                         ),
                       ],

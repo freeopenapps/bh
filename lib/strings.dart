@@ -10,7 +10,14 @@ class EntryViewStrings {
 // ========= WIDGETS
 //
 class EntryRowsStrings {
-  static const name = '';
+  static const ketonesTitle = 'Ketones';
+  static const ketonesUnits = 'mmol/L';
+  static const glucoseTitle = 'Glucose';
+  static const glucoseUnits = 'mg/dL';
+  static const weightTitle = 'Weight';
+  static const weightUnits = 'lb';
+  static const pressureTitle = 'Pressure';
+  static const pressureUnits = 'dia/sys/bpm';
 }
 
 class EntryRowItemStrings {
