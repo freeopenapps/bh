@@ -25,7 +25,19 @@ class EntryRowItemStrings {
 }
 
 class EditEntryStrings {
-  static const name = '';
+  static const deleteDialogTitle = 'Delete Entry';
+  static const deleteDialogCancelBtn = 'Cancel';
+  static const deleteDialogDeleteBtn = 'Delete';
+
+  static const entryTitle = 'Update Entry';
+  static const entryKetonesFld = 'Ketones';
+  static const entryGlucoseFld = 'Glucose';
+  static const entryWeightFld = 'Weight';
+  static const entryPressureFld = 'Pressure';
+  static const entryNoteFld = 'Note';
+
+  static const saveBtn = 'Save Changes';
+  static const deleteBtn = 'Delete';
 }
 
 class AppBarTitleStrings {

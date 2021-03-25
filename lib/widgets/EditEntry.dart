@@ -6,6 +6,8 @@ import '../providers/entry_list.dart';
 
 import '../models/Entry.dart';
 import '../theme.dart';
+import '../strings.dart';
+import '../constants.dart';
 
 class EditEntry extends StatefulWidget {
   final Entry entry;
@@ -40,7 +42,7 @@ class _EditEntryState extends State<EditEntry> {
     showDatePicker(
       context: context,
       initialDate: DateTime.now(),
-      firstDate: DateTime(2021),
+      firstDate: DateTime(EditEntryConsts.datePickerStartYear),
       lastDate: DateTime.now(),
     ).then((pickedDate) {
       if (pickedDate == null) return;
@@ -106,7 +108,7 @@ class _EditEntryState extends State<EditEntry> {
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Delete Entry'),
+          title: Text(EditEntryStrings.deleteDialogTitle),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
@@ -125,13 +127,13 @@ class _EditEntryState extends State<EditEntry> {
           ),
           actions: <Widget>[
             TextButton(
-              child: Text('Cancel'),
+              child: Text(EditEntryStrings.deleteDialogCancelBtn),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             TextButton(
-              child: Text('Delete'),
+              child: Text(EditEntryStrings.deleteDialogDeleteBtn),
               onPressed: () {
                 Provider.of<EntryListProvider>(
                   ctx,
@@ -151,43 +153,48 @@ class _EditEntryState extends State<EditEntry> {
     final theme = mobileTheme();
     return SingleChildScrollView(
       child: Container(
-        padding: EdgeInsets.all(10),
+        padding: EdgeInsets.all(EditEntryConsts.scrollViewPadding),
         child: Column(
           children: [
             Text(
-              'Update Entry',
+              EditEntryStrings.entryTitle,
               style: theme.textTheme.headline1,
             ),
             TextField(
-              decoration: const InputDecoration(labelText: 'Ketones'),
+              decoration: const InputDecoration(
+                  labelText: EditEntryStrings.entryKetonesFld),
               controller: _ketonesC,
               keyboardType: TextInputType.number,
             ),
             TextField(
-              decoration: const InputDecoration(labelText: 'Glucose'),
+              decoration: const InputDecoration(
+                  labelText: EditEntryStrings.entryGlucoseFld),
               controller: _glucoseC,
               keyboardType: TextInputType.number,
             ),
             TextField(
-              decoration: const InputDecoration(labelText: 'Weight'),
+              decoration: const InputDecoration(
+                  labelText: EditEntryStrings.entryWeightFld),
               controller: _weightC,
               keyboardType: TextInputType.number,
             ),
             TextField(
-              decoration: const InputDecoration(labelText: 'Pressure'),
+              decoration: const InputDecoration(
+                  labelText: EditEntryStrings.entryPressureFld),
               controller: _pressureC,
               keyboardType: TextInputType.datetime,
             ),
             TextField(
-              decoration: const InputDecoration(labelText: 'Note'),
+              decoration: const InputDecoration(
+                  labelText: EditEntryStrings.entryNoteFld),
               controller: _noteC,
               keyboardType: TextInputType.multiline,
-              maxLines: 4,
-              minLines: 1,
+              maxLines: EditEntryConsts.noteMaxLines,
+              minLines: EditEntryConsts.noteMinLines,
             ),
             Container(
-              padding: EdgeInsets.all(5),
-              margin: EdgeInsets.all(1),
+              padding: EdgeInsets.all(EditEntryConsts.dateTimeBtnPadding),
+              margin: EdgeInsets.all(EditEntryConsts.dateTimeBtnMargin),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -216,15 +223,14 @@ class _EditEntryState extends State<EditEntry> {
               ),
             ),
             Container(
-              padding: EdgeInsets.all(10),
-              width: 600,
+              padding: EdgeInsets.all(EditEntryConsts.btnPadding),
               child: Column(
                 children: [
                   SizedBox(
-                    width: 600,
+                    width: EditEntryConsts.btnWidth,
                     child: ElevatedButton(
                       child: Text(
-                        'Save Changes',
+                        EditEntryStrings.saveBtn,
                         style: theme.textTheme.button,
                       ),
                       onPressed: () => _updateEntry(),
@@ -234,10 +240,10 @@ class _EditEntryState extends State<EditEntry> {
                     ),
                   ),
                   SizedBox(
-                    width: 600,
+                    width: EditEntryConsts.btnWidth,
                     child: ElevatedButton(
                       child: Text(
-                        'Delete',
+                        EditEntryStrings.deleteBtn,
                         style: theme.textTheme.button,
                       ),
                       onPressed: () => _deleteDialog(context),

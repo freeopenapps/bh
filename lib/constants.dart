@@ -23,3 +23,18 @@ class EntryRowsConsts {
   static const noteHeight = 70.0;
   static const noteMaxLines = 4;
 }
+
+class EditEntryConsts {
+  static const datePickerStartYear = 2021;
+
+  static const scrollViewPadding = 10.0;
+
+  static const dateTimeBtnPadding = 5.0;
+  static const dateTimeBtnMargin = 1.0;
+
+  static const noteMaxLines = 4;
+  static const noteMinLines = 1;
+
+  static const btnPadding = 10.0;
+  static const btnWidth = 600.0;
+}
