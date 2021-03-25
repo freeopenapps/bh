@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../theme.dart';
 
 class EntryRowItem extends StatelessWidget {
   final String title;
@@ -13,6 +14,7 @@ class EntryRowItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = mobileTheme();
     return Directionality(
       textDirection: TextDirection.ltr,
       child: Expanded(
@@ -23,27 +25,18 @@ class EntryRowItem extends StatelessWidget {
             children: <Widget>[
               Text(
                 this.title,
-                style: TextStyle(
-                  fontWeight: FontWeight.normal,
-                  fontSize: 12,
-                  color: Theme.of(context).colorScheme.primaryVariant,
-                ),
+                style: theme.textTheme.headline3,
               ),
               Text(
                 this.value,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 12,
-                  color: Theme.of(context).colorScheme.secondaryVariant,
+                style: theme.textTheme.headline1.copyWith(
+                  fontSize: 19.0,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
               Text(
                 this.units,
-                style: TextStyle(
-                  fontWeight: FontWeight.normal,
-                  fontSize: 10,
-                  color: Theme.of(context).primaryColor,
-                ),
+                style: theme.textTheme.headline3,
               ),
             ],
           ),

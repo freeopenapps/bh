@@ -8,7 +8,7 @@ class BackupModalStrings {
   static const selBackupDialogMsg = 'Backup Created!';
 
   // Full Backup
-  static const fullBackupTitle = 'Complete Backup';
+  static const fullBackupTitle = 'Backup';
   static const fullBackupMsg = 'Backup all data to files on device';
   static const fullBackupBtn = 'Backup All Data';
   static const fullBackupDialogTitle = 'Full Backup Created';

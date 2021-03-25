@@ -1,4 +1,3 @@
-import 'package:bloodhound/widgets/BackupModal.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -74,20 +73,6 @@ class _AppBarTitleState extends State<AppBarTitle> {
     });
   }
 
-  void _backupModal(BuildContext ctx) {
-    showModalBottomSheet(
-      context: ctx,
-      isScrollControlled: true,
-      builder: (_) {
-        return GestureDetector(
-          child: BackupModal(),
-          onTap: () {},
-          behavior: HitTestBehavior.opaque,
-        );
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final theme = mobileTheme();
@@ -110,7 +95,7 @@ class _AppBarTitleState extends State<AppBarTitle> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
+                children: [
                   Padding(
                     padding: const EdgeInsets.all(1.0),
                     child: ElevatedButton(
@@ -142,13 +127,6 @@ class _AppBarTitleState extends State<AppBarTitle> {
                 ],
               ),
             ],
-          ),
-          IconButton(
-            icon: Icon(Icons.file_copy),
-            iconSize: 40,
-            tooltip: 'Backup',
-            color: Theme.of(context).secondaryHeaderColor,
-            onPressed: () => {_backupModal(context)},
           ),
         ],
       ),

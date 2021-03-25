@@ -7,6 +7,7 @@ import '../models/Entry.dart';
 import '../widgets/AddEntry.dart';
 import '../widgets/EditEntry.dart';
 import '../widgets/EntryRows.dart';
+import '../widgets/BackupModal.dart';
 
 class EntryView extends StatefulWidget {
   final String title;
@@ -46,9 +47,24 @@ class _EntryViewState extends State<EntryView> {
     );
   }
 
+  void _backupModal(BuildContext ctx) {
+    showModalBottomSheet(
+      context: ctx,
+      isScrollControlled: true,
+      builder: (_) {
+        return GestureDetector(
+          child: BackupModal(),
+          onTap: () {},
+          behavior: HitTestBehavior.opaque,
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
+    final theme = mobileTheme();
     /**
      * Note: Nested MaterialApp here to be able to use 
      * MediaQuery for theme selection
@@ -71,13 +87,32 @@ class _EntryViewState extends State<EntryView> {
         ),
         body: Column(
           children: [
-            EntryRows(_editEntryModal, context),
+            EntryRows(_editEntryModal),
           ],
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.add),
-          onPressed: () => _newEntryModal(context),
+        floatingActionButton: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            FloatingActionButton.extended(
+              onPressed: () => _newEntryModal(context),
+              label: Text(
+                'New Entry',
+                style: theme.textTheme.button,
+              ),
+            ),
+            FloatingActionButton.extended(
+              onPressed: () => _backupModal(context),
+              label: Text(
+                'Backup',
+                style: theme.textTheme.button,
+              ),
+            )
+            // FloatingActionButton.extended(
+            //   child: Text('Back Up'),
+            //   onPressed: () => _newEntryModal(context),
+            // ),
+          ],
         ),
       ),
     );

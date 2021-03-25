@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/entry_list.dart';
+import '../theme.dart';
 
 class BackupModal extends StatefulWidget {
   @override
@@ -135,124 +136,140 @@ class _BackupModalState extends State<BackupModal> {
 
   @override
   Widget build(BuildContext context) {
-    const double padding = 18.0;
+    const double padding = 24.0;
+    final theme = mobileTheme();
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(padding),
-        child: Column(
-          // padding: EdgeInsets.all(30),
-          children: <Widget>[
-            // Card(
-            //   child: Column(
-            //     children: [
-            //       Text(
-            //         BackupModalStrings.selBackupTitle,
-            //         style: Theme.of(context).textTheme.headline1,
-            //       ),
-            //       Text(
-            //         BackupModalStrings.selBackupRange,
-            //         style: Theme.of(context).textTheme.headline2,
-            //       ),
-            //       Row(
-            //         mainAxisAlignment: MainAxisAlignment.center,
-            //         crossAxisAlignment: CrossAxisAlignment.center,
-            //         children: <Widget>[
-            //           Padding(
-            //             padding: const EdgeInsets.all(2),
-            //             child: ElevatedButton(
-            //               child: Text(
-            //                 DateFormat.yMd().format(_startDate),
-            //               ),
-            //               onPressed: () => {_showDatePicker('start')},
-            //               // autofocus: true,
-            //               clipBehavior: Clip.antiAlias,
-            //               style: Theme.of(context).elevatedButtonTheme.style,
-            //             ),
-            //           ),
-            //           Padding(
-            //             padding: const EdgeInsets.all(2),
-            //             child: ElevatedButton(
-            //               child: Text(
-            //                 DateFormat.yMd().format(_endDate),
-            //               ),
-            //               onPressed: () => {_showDatePicker('end')},
-            //               // autofocus: true,
-            //               clipBehavior: Clip.antiAlias,
-            //               style: Theme.of(context).elevatedButtonTheme.style,
-            //             ),
-            //           ),
-            //         ],
-            //       ),
-            //       Text(
-            //         BackupModalStrings.selBackupMsg,
-            //         style: Theme.of(context).textTheme.headline2,
-            //       ),
-            //       Padding(
-            //         padding: const EdgeInsets.all(padding),
-            //         child: ElevatedButton(
-            //           child: Text(BackupModalStrings.selBackupBtn),
-            //           style: Theme.of(context).elevatedButtonTheme.style,
-            //           onPressed: () => {_selectiveBackup(context)},
-            //           autofocus: true,
-            //           clipBehavior: Clip.antiAlias,
-            //         ),
-            //       ),
-            //     ],
-            //   ),
-            // ),
-            Card(
-              child: Column(
-                children: <Widget>[
-                  Text(
-                    BackupModalStrings.fullBackupTitle,
-                    style: Theme.of(context).textTheme.headline1,
-                  ),
-                  Text(
-                    BackupModalStrings.fullBackupMsg,
-                    style: Theme.of(context).textTheme.headline2,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      ElevatedButton(
-                        child: Text(BackupModalStrings.fullBackupBtn),
-                        style: Theme.of(context).elevatedButtonTheme.style,
-                        onPressed: () => {_fullBackup(context)},
-                        autofocus: true,
-                        clipBehavior: Clip.antiAlias,
+        child: Container(
+          margin: EdgeInsets.all(5),
+          child: Column(
+            // padding: EdgeInsets.all(30),
+            children: [
+              Card(
+                child: Column(
+                  children: <Widget>[
+                    Text(
+                      BackupModalStrings.fullBackupTitle,
+                      style: theme.textTheme.headline1,
+                    ),
+                    Text(
+                      BackupModalStrings.fullBackupMsg,
+                      style: theme.textTheme.headline2,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(padding),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          ElevatedButton(
+                            child: Text(
+                              BackupModalStrings.fullBackupBtn,
+                              style: theme.textTheme.button,
+                            ),
+                            style: theme.elevatedButtonTheme.style,
+                            onPressed: () => {_fullBackup(context)},
+                            autofocus: true,
+                            clipBehavior: Clip.antiAlias,
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-            Card(
-              child: Column(
-                children: <Widget>[
-                  Text(
-                    BackupModalStrings.restoreTitle,
-                    style: Theme.of(context).textTheme.headline1,
-                  ),
-                  Text(
-                    BackupModalStrings.restoreMsg,
-                    style: Theme.of(context).textTheme.headline2,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      ElevatedButton(
-                        child: Text(BackupModalStrings.restoreBtn),
-                        style: Theme.of(context).elevatedButtonTheme.style,
-                        onPressed: () => {_restore(context)},
-                        autofocus: true,
-                        clipBehavior: Clip.antiAlias,
+              Card(
+                child: Column(
+                  children: <Widget>[
+                    Text(
+                      BackupModalStrings.restoreTitle,
+                      style: theme.textTheme.headline1,
+                    ),
+                    Text(
+                      BackupModalStrings.restoreMsg,
+                      style: theme.textTheme.headline2,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(padding),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          ElevatedButton(
+                            child: Text(
+                              BackupModalStrings.restoreBtn,
+                              style: theme.textTheme.button,
+                            ),
+                            style: theme.elevatedButtonTheme.style,
+                            onPressed: () => {_restore(context)},
+                            autofocus: true,
+                            clipBehavior: Clip.antiAlias,
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+              // Card(
+              //   child: Column(
+              //     children: [
+              //       Text(
+              //         BackupModalStrings.selBackupTitle,
+              //         style: Theme.of(context).textTheme.headline1,
+              //       ),
+              //       Text(
+              //         BackupModalStrings.selBackupRange,
+              //         style: Theme.of(context).textTheme.headline2,
+              //       ),
+              //       Row(
+              //         mainAxisAlignment: MainAxisAlignment.center,
+              //         crossAxisAlignment: CrossAxisAlignment.center,
+              //         children: <Widget>[
+              //           Padding(
+              //             padding: const EdgeInsets.all(2),
+              //             child: ElevatedButton(
+              //               child: Text(
+              //                 DateFormat.yMd().format(_startDate),
+              //               ),
+              //               onPressed: () => {_showDatePicker('start')},
+              //               // autofocus: true,
+              //               clipBehavior: Clip.antiAlias,
+              //               style: Theme.of(context).elevatedButtonTheme.style,
+              //             ),
+              //           ),
+              //           Padding(
+              //             padding: const EdgeInsets.all(2),
+              //             child: ElevatedButton(
+              //               child: Text(
+              //                 DateFormat.yMd().format(_endDate),
+              //               ),
+              //               onPressed: () => {_showDatePicker('end')},
+              //               // autofocus: true,
+              //               clipBehavior: Clip.antiAlias,
+              //               style: Theme.of(context).elevatedButtonTheme.style,
+              //             ),
+              //           ),
+              //         ],
+              //       ),
+              //       Text(
+              //         BackupModalStrings.selBackupMsg,
+              //         style: Theme.of(context).textTheme.headline2,
+              //       ),
+              //       Padding(
+              //         padding: const EdgeInsets.all(padding),
+              //         child: ElevatedButton(
+              //           child: Text(BackupModalStrings.selBackupBtn),
+              //           style: Theme.of(context).elevatedButtonTheme.style,
+              //           onPressed: () => {_selectiveBackup(context)},
+              //           autofocus: true,
+              //           clipBehavior: Clip.antiAlias,
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
+            ],
+          ),
         ),
       ),
     );

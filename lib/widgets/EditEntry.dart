@@ -100,14 +100,64 @@ class _EditEntryState extends State<EditEntry> {
     Navigator.of(context).pop();
   }
 
+  Future<void> _deleteDialog(BuildContext ctx) async {
+    return showDialog<void>(
+      context: ctx,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Delete Entry'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text(
+                  DateFormat.yMd().format(
+                    DateTime.parse(widget.entry.date),
+                  ),
+                ),
+                Text(
+                  DateFormat.jm().format(
+                    DateTime.parse(widget.entry.date),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text('Delete'),
+              onPressed: () {
+                Provider.of<EntryListProvider>(
+                  ctx,
+                  listen: false,
+                ).delete(widget.entry);
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = mobileTheme();
     return SingleChildScrollView(
       child: Container(
-        padding: EdgeInsets.all(30),
+        padding: EdgeInsets.all(10),
         child: Column(
           children: [
+            Text(
+              'Update Entry',
+              style: theme.textTheme.headline1,
+            ),
             TextField(
               decoration: const InputDecoration(labelText: 'Ketones'),
               controller: _ketonesC,
@@ -168,15 +218,38 @@ class _EditEntryState extends State<EditEntry> {
             Container(
               padding: EdgeInsets.all(10),
               width: 600,
-              child: ElevatedButton(
-                child: Text(
-                  'Update Entry',
-                  style: theme.textTheme.button,
-                ),
-                onPressed: () => _updateEntry(),
-                autofocus: true,
-                clipBehavior: Clip.antiAlias,
-                style: theme.elevatedButtonTheme.style,
+              child: Column(
+                children: [
+                  SizedBox(
+                    width: 600,
+                    child: ElevatedButton(
+                      child: Text(
+                        'Save Changes',
+                        style: theme.textTheme.button,
+                      ),
+                      onPressed: () => _updateEntry(),
+                      autofocus: true,
+                      clipBehavior: Clip.antiAlias,
+                      style: theme.elevatedButtonTheme.style,
+                    ),
+                  ),
+                  SizedBox(
+                    width: 600,
+                    child: ElevatedButton(
+                      child: Text(
+                        'Delete',
+                        style: theme.textTheme.button,
+                      ),
+                      onPressed: () => _deleteDialog(context),
+                      autofocus: true,
+                      clipBehavior: Clip.antiAlias,
+                      style: theme.elevatedButtonTheme.style.copyWith(
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(Colors.red),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
