@@ -12,7 +12,10 @@
 - All data on your device, no ads or external network calls
 - Free forever
 
-# Specifications
+# Testing
+- Unit/Widget: flutter test test/<test file>.dart
+
+# Build
 - Android
   - Build: flutter build apk --split-per-abi
   - Install: flutter install
