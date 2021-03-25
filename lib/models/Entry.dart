@@ -115,32 +115,32 @@ class Entry {
     return '';
   }
 
-  static Future<void> toFile(Entry entry) async {
-    /** Write a json file <id>.json for given Entry*/
-    try {
-      String path = await getFileDir();
-      // print('\n\ntoFile: PATH:');
-      // print(path);
-      if (path != '') {
-        var fullPath = join(path, Entry.getFileName(entry));
-        // print('Writing file: ' + fullPath);
-        File f = File(fullPath);
-        // print(f.path);
-        await f.writeAsString(json.encode(entry.toMap()));
-        // await File(fullPath).exists().then((value) => print(value));
-      }
-    } on Exception catch (e) {
-      print('toFile: ERROR\n');
-      print(e.toString());
-    }
-  }
+  // static Future<void> toFile(Entry entry) async {
+  //   /** Write a json file <id>.json for given Entry*/
+  //   try {
+  //     String path = await getFileDir();
+  //     // print('\n\ntoFile: PATH:');
+  //     // print(path);
+  //     if (path != '') {
+  //       var fullPath = join(path, Entry.getFileName(entry));
+  //       // print('Writing file: ' + fullPath);
+  //       File f = File(fullPath);
+  //       // print(f.path);
+  //       await f.writeAsString(json.encode(entry.toMap()));
+  //       // await File(fullPath).exists().then((value) => print(value));
+  //     }
+  //   } on Exception catch (e) {
+  //     print('toFile: ERROR\n');
+  //     print(e.toString());
+  //   }
+  // }
 
-  static Future<Entry> fromFile(String path) async {
-    /** Read a json file and return an Entry */
-    File f = File(path);
-    String data = await f.readAsString();
-    return Entry.fromMap(json.decode(data));
-  }
+  // static Future<Entry> fromFile(String path) async {
+  //   /** Read a json file and return an Entry */
+  //   File f = File(path);
+  //   String data = await f.readAsString();
+  //   return Entry.fromMap(json.decode(data));
+  // }
 
   static String getFileName(Entry entry) {
     // Output:  2021-03-17_11-00-00_000.a82bfe9f-0b28-4f2c-a0d2-3f2c41305c10.json

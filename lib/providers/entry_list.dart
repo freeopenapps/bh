@@ -50,42 +50,42 @@ class EntryListProvider extends ChangeNotifier {
   }
 
   //============= Backup / Restore API
-  Future<void> backUp() async {
-    await _init();
-    _entries.forEach((e) {
-      // print('Backing up: ' + e.id);
-      Entry.toFile(e);
-    });
+  // Future<void> backUp() async {
+  //   await _init();
+  //   _entries.forEach((e) {
+  //     // print('Backing up: ' + e.id);
+  //     Entry.toFile(e);
+  //   });
 
-    notifyListeners();
-  }
+  //   notifyListeners();
+  // }
 
-  Future<void> restore() async {
-    // Example file name:
-    // 2021-03-17_11-00-00_000.a82bfe9f-0b28-4f2c-a0d2-3f2c41305c10.json
+  // Future<void> restore() async {
+  //   // Example file name:
+  //   // 2021-03-17_11-00-00_000.a82bfe9f-0b28-4f2c-a0d2-3f2c41305c10.json
 
-    await _init();
-    Directory path = Directory(await Entry.getFileDir());
-    // print('\n\nRESTORE(): PATH:');
-    // print(path);
+  //   await _init();
+  //   Directory path = Directory(await Entry.getFileDir());
+  //   // print('\n\nRESTORE(): PATH:');
+  //   // print(path);
 
-    List<FileSystemEntity> files = await path.list().where((obj) {
-      var elems = obj.path.split('.');
-      print(elems);
-      if (elems.length > 2) {
-        return isUUID(elems[1]);
-      }
-      return false;
-    }).toList();
+  //   List<FileSystemEntity> files = await path.list().where((obj) {
+  //     var elems = obj.path.split('.');
+  //     print(elems);
+  //     if (elems.length > 2) {
+  //       return isUUID(elems[1]);
+  //     }
+  //     return false;
+  //   }).toList();
 
-    // files.forEach((f) {
-    //   print('Found: ' + f.path);
-    // });
+  //   // files.forEach((f) {
+  //   //   print('Found: ' + f.path);
+  //   // });
 
-    // Create entries from the files
-    files.forEach((f) async => DBAPI.insert(await Entry.fromFile(f.path)));
+  //   // Create entries from the files
+  //   files.forEach((f) async => DBAPI.insert(await Entry.fromFile(f.path)));
 
-    // Refresh the entries list
-    await _init();
-  }
+  //   // Refresh the entries list
+  //   await _init();
+  // }
 }

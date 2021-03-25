@@ -85,53 +85,53 @@ class _BackupModalState extends State<BackupModal> {
       listen: false,
     ).setRange(_startDate, _endDate);
 
-    await Provider.of<EntryListProvider>(
-      context,
-      listen: false,
-    ).backUp().then((res) {
-      _messageDialog(
-        context,
-        BackupModalStrings.selBackupDialogTitle,
-        BackupModalStrings.selBackupDialogMsg,
-      );
-    }).catchError((onError) {
-      print('_selectiveBackup(): Error\n');
-      print(onError);
-    });
+    // await Provider.of<EntryListProvider>(
+    //   context,
+    //   listen: false,
+    // ).backUp().then((res) {
+    //   _messageDialog(
+    //     context,
+    //     BackupModalStrings.selBackupDialogTitle,
+    //     BackupModalStrings.selBackupDialogMsg,
+    //   );
+    // }).catchError((onError) {
+    //   print('_selectiveBackup(): Error\n');
+    //   print(onError);
+    // });
   }
 
   void _fullBackup(context) {
     Navigator.of(context).pop();
-    Provider.of<EntryListProvider>(
-      context,
-      listen: false,
-    ).backUp().then((res) {
-      _messageDialog(
-        context,
-        BackupModalStrings.fullBackupDialogTitle,
-        BackupModalStrings.fullBackupDialogMsg,
-      );
-    }).catchError((onError) {
-      print('_fullBackup(): Error\n');
-      print(onError);
-    });
+    // Provider.of<EntryListProvider>(
+    //   context,
+    //   listen: false,
+    // ).backUp().then((res) {
+    //   _messageDialog(
+    //     context,
+    //     BackupModalStrings.fullBackupDialogTitle,
+    //     BackupModalStrings.fullBackupDialogMsg,
+    //   );
+    // }).catchError((onError) {
+    //   print('_fullBackup(): Error\n');
+    //   print(onError);
+    // });
   }
 
   void _restore(context) async {
-    await Provider.of<EntryListProvider>(
-      context,
-      listen: false,
-    ).restore().then((res) {
-      _messageDialog(
-        context,
-        BackupModalStrings.restoreDialogTitle,
-        BackupModalStrings.restoreDialogMsg,
-      );
-      Navigator.of(context).pop();
-    }).catchError((onError) {
-      print('_restore(): Error\n');
-      print(onError);
-    });
+    // await Provider.of<EntryListProvider>(
+    //   context,
+    //   listen: false,
+    // ).restore().then((res) {
+    //   _messageDialog(
+    //     context,
+    //     BackupModalStrings.restoreDialogTitle,
+    //     BackupModalStrings.restoreDialogMsg,
+    //   );
+    //   Navigator.of(context).pop();
+    // }).catchError((onError) {
+    //   print('_restore(): Error\n');
+    //   print(onError);
+    // });
   }
 
   @override
