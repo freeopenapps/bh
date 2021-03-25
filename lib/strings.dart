@@ -1,3 +1,34 @@
+//
+// ========= VIEWS
+//
+class EntryViewStrings {
+  static const newEntryBtn = '+ New Entry';
+  static const backupBtn = 'Backup / Restore';
+}
+
+//
+// ========= WIDGETS
+//
+class EntryRowsStrings {
+  static const name = '';
+}
+
+class EntryRowItemStrings {
+  static const name = '';
+}
+
+class EditEntryStrings {
+  static const name = '';
+}
+
+class AppBarTitleStrings {
+  static const name = '';
+}
+
+class AddEntryStrings {
+  static const name = '';
+}
+
 class BackupModalStrings {
   // Selective Backup
   static const selBackupTitle = 'Selective Backup';

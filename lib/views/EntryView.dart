@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../constants.dart';
+import '../strings.dart';
 import '../theme.dart';
 import '../widgets/AppBarTitle.dart';
 import '../models/Entry.dart';
@@ -78,7 +79,9 @@ class _EntryViewState extends State<EntryView> {
       // theme: mediumTheme('dark'),
       home: Scaffold(
         appBar: AppBar(
-          toolbarHeight: screenWidth >= ScreenWidth.small ? 100 : 60,
+          toolbarHeight: screenWidth >= ScreenWidth.small
+              ? EntryViewConsts.toolbarHeightMobile
+              : EntryViewConsts.toolbarHeightTablet,
           title: AppBarTitle(
             screenWidth: screenWidth,
             title: widget.title,
@@ -97,21 +100,17 @@ class _EntryViewState extends State<EntryView> {
             FloatingActionButton.extended(
               onPressed: () => _newEntryModal(context),
               label: Text(
-                'New Entry',
+                EntryViewStrings.newEntryBtn,
                 style: theme.textTheme.button,
               ),
             ),
             FloatingActionButton.extended(
               onPressed: () => _backupModal(context),
               label: Text(
-                'Backup',
+                EntryViewStrings.backupBtn,
                 style: theme.textTheme.button,
               ),
             )
-            // FloatingActionButton.extended(
-            //   child: Text('Back Up'),
-            //   onPressed: () => _newEntryModal(context),
-            // ),
           ],
         ),
       ),

@@ -4,3 +4,8 @@ class ScreenWidth {
   static const large = 1000;
   static const max = 1400;
 }
+
+class EntryViewConsts {
+  static const toolbarHeightMobile = 100.0;
+  static const toolbarHeightTablet = 60.0;
+}
