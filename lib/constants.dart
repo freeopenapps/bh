@@ -49,6 +49,12 @@ class EntryRowItemConsts {
 class AppBarTitleConsts {
   static const datePickerStartYear = 2020;
 
+  static const dateBtnsPadding = 1.0;
+
   static const startOpt = 1;
   static const endOpt = 2;
+}
+
+class AddEntryConsts {
+  static const name = '';
 }

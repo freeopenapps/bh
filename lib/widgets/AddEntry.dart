@@ -5,6 +5,8 @@ import 'package:provider/provider.dart';
 
 import '../providers/entry_list.dart';
 import '../theme.dart';
+import '../strings.dart';
+import '../constants.dart';
 
 class AddEntry extends StatefulWidget {
   @override
@@ -26,7 +28,7 @@ class _AddEntryState extends State<AddEntry> {
     showDatePicker(
       context: context,
       initialDate: DateTime.now(),
-      firstDate: DateTime(2021),
+      firstDate: DateTime(AddEntryConsts.datePickerStartYear),
       lastDate: DateTime.now(),
     ).then((pickedDate) {
       if (pickedDate == null) return;
@@ -84,39 +86,49 @@ class _AddEntryState extends State<AddEntry> {
     final theme = mobileTheme();
     return SingleChildScrollView(
       child: Container(
-        padding: EdgeInsets.all(30),
+        padding: EdgeInsets.all(AddEntryConsts.scrollViewPadding),
         child: Column(
           children: [
             TextField(
-              decoration: const InputDecoration(labelText: 'Ketones'),
+              decoration: const InputDecoration(
+                labelText: AddEntryStrings.entryKetonesFld,
+              ),
               controller: _ketonesC,
               keyboardType: TextInputType.number,
             ),
             TextField(
-              decoration: const InputDecoration(labelText: 'Glucose'),
+              decoration: const InputDecoration(
+                labelText: AddEntryStrings.entryGlucoseFld,
+              ),
               controller: _glucoseC,
               keyboardType: TextInputType.number,
             ),
             TextField(
-              decoration: const InputDecoration(labelText: 'Weight'),
+              decoration: const InputDecoration(
+                labelText: AddEntryStrings.entryWeightFld,
+              ),
               controller: _weightC,
               keyboardType: TextInputType.number,
             ),
             TextField(
-              decoration: const InputDecoration(labelText: 'Pressure'),
+              decoration: const InputDecoration(
+                labelText: AddEntryStrings.entryPressureFld,
+              ),
               controller: _pressureC,
               keyboardType: TextInputType.datetime,
             ),
             TextField(
-              decoration: const InputDecoration(labelText: 'Note'),
+              decoration: const InputDecoration(
+                labelText: AddEntryStrings.entryNoteFld,
+              ),
               controller: _noteC,
               keyboardType: TextInputType.multiline,
-              maxLines: 4,
-              minLines: 1,
+              maxLines: AddEntryConsts.noteMaxLines,
+              minLines: AddEntryConsts.noteMinLines,
             ),
             Container(
-              padding: EdgeInsets.all(5),
-              margin: EdgeInsets.all(1),
+              padding: EdgeInsets.all(AddEntryConsts.dateTimeBtnPadding),
+              margin: EdgeInsets.all(AddEntryConsts.dateTimeBtnMargin),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -143,12 +155,12 @@ class _AddEntryState extends State<AddEntry> {
               ),
             ),
             Container(
-              padding: EdgeInsets.all(10),
-              width: 600,
+              padding: EdgeInsets.all(AddEntryConsts.btnPadding),
+              width: AddEntryConsts.btnWidth,
               child: ElevatedButton(
                 style: theme.elevatedButtonTheme.style,
                 child: Text(
-                  'Create Entry',
+                  AddEntryStrings.createBtn,
                   style: theme.textTheme.button,
                 ),
                 onPressed: () => _submitEntry(),

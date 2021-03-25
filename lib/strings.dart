@@ -36,12 +36,15 @@ class EditEntryStrings {
   static const deleteBtn = 'Delete';
 }
 
-class AppBarTitleStrings {
-  static const name = '';
-}
-
 class AddEntryStrings {
-  static const name = '';
+  static const entryTitle = 'Update Entry';
+  static const entryKetonesFld = 'Ketones';
+  static const entryGlucoseFld = 'Glucose';
+  static const entryWeightFld = 'Weight';
+  static const entryPressureFld = 'Pressure';
+  static const entryNoteFld = 'Note';
+
+  static const createBtn = 'Create Entry';
 }
 
 class BackupModalStrings {
