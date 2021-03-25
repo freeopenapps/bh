@@ -13,7 +13,7 @@
 - Free forever
 
 # Testing
-- Unit/Widget: flutter test test/<test file>.dart
+- Unit/Widget: flutter test test/< test file >.dart
 
 # Build
 - Android
