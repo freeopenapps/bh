@@ -81,7 +81,7 @@ class _AddEntryState extends State<AddEntry> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = redrum();
+    final theme = mobileTheme();
     return SingleChildScrollView(
       child: Container(
         padding: EdgeInsets.all(30),
@@ -125,6 +125,7 @@ class _AddEntryState extends State<AddEntry> {
                     style: theme.elevatedButtonTheme.style,
                     child: Text(
                       DateFormat.yMd().format(_selectedDate),
+                      style: theme.textTheme.button,
                     ),
                     onPressed: _showDatePicker,
                     clipBehavior: Clip.antiAlias,
@@ -133,6 +134,7 @@ class _AddEntryState extends State<AddEntry> {
                     style: theme.elevatedButtonTheme.style,
                     child: Text(
                       _selectedTime.format(context),
+                      style: theme.textTheme.button,
                     ),
                     onPressed: _showTimePicker,
                     clipBehavior: Clip.antiAlias,
@@ -145,7 +147,10 @@ class _AddEntryState extends State<AddEntry> {
               width: 600,
               child: ElevatedButton(
                 style: theme.elevatedButtonTheme.style,
-                child: Text('Create Entry'),
+                child: Text(
+                  'Create Entry',
+                  style: theme.textTheme.button,
+                ),
                 onPressed: () => _submitEntry(),
                 clipBehavior: Clip.antiAlias,
               ),

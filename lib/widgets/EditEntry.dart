@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import '../providers/entry_list.dart';
 
 import '../models/Entry.dart';
+import '../theme.dart';
 
 class EditEntry extends StatefulWidget {
   final Entry entry;
@@ -101,6 +102,7 @@ class _EditEntryState extends State<EditEntry> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = mobileTheme();
     return SingleChildScrollView(
       child: Container(
         padding: EdgeInsets.all(30),
@@ -139,28 +141,26 @@ class _EditEntryState extends State<EditEntry> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
+                children: [
                   ElevatedButton(
                     child: Text(
                       DateFormat.yMd().format(_selectedDate),
+                      style: theme.textTheme.button,
                     ),
                     onPressed: _showDatePicker,
                     autofocus: true,
                     clipBehavior: Clip.antiAlias,
-                    style: ElevatedButton.styleFrom(
-                      primary: Theme.of(context).buttonColor,
-                    ),
+                    style: theme.elevatedButtonTheme.style,
                   ),
                   ElevatedButton(
                     child: Text(
                       _selectedTime.format(context),
+                      style: theme.textTheme.button,
                     ),
                     onPressed: _showTimePicker,
                     autofocus: true,
                     clipBehavior: Clip.antiAlias,
-                    style: ElevatedButton.styleFrom(
-                      primary: Theme.of(context).buttonColor,
-                    ),
+                    style: theme.elevatedButtonTheme.style,
                   )
                 ],
               ),
@@ -169,13 +169,14 @@ class _EditEntryState extends State<EditEntry> {
               padding: EdgeInsets.all(10),
               width: 600,
               child: ElevatedButton(
-                child: Text('Update Entry'),
+                child: Text(
+                  'Update Entry',
+                  style: theme.textTheme.button,
+                ),
                 onPressed: () => _updateEntry(),
                 autofocus: true,
                 clipBehavior: Clip.antiAlias,
-                style: ElevatedButton.styleFrom(
-                  primary: Theme.of(context).buttonColor,
-                ),
+                style: theme.elevatedButtonTheme.style,
               ),
             ),
           ],

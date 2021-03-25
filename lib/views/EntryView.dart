@@ -58,7 +58,7 @@ class _EntryViewState extends State<EntryView> {
       // theme: ThemeData(
       //   primarySwatch: Colors.orange,
       // ),
-      theme: redrum(),
+      theme: mobileTheme(),
       // theme: mediumTheme('dark'),
       home: Scaffold(
         appBar: AppBar(

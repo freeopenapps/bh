@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/entry_list.dart';
+import '../theme.dart';
 
 class AppBarTitle extends StatefulWidget {
   final double screenWidth;
@@ -89,6 +90,7 @@ class _AppBarTitleState extends State<AppBarTitle> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = mobileTheme();
     return Container(
       alignment: Alignment.center,
       child: Row(
@@ -110,30 +112,31 @@ class _AppBarTitleState extends State<AppBarTitle> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Padding(
-                      padding: const EdgeInsets.all(1.0),
-                      child: ElevatedButton(
-                        child: Text(
-                          DateFormat.yMd().format(_startDate),
-                        ),
-                        onPressed: () {
-                          _showDatePicker('start');
-                        },
-                        autofocus: true,
-                        clipBehavior: Clip.antiAlias,
-                        style: Theme.of(context).elevatedButtonTheme.style,
-                      )),
+                    padding: const EdgeInsets.all(1.0),
+                    child: ElevatedButton(
+                      child: Text(
+                        DateFormat.yMd().format(_startDate),
+                        style: theme.textTheme.button,
+                      ),
+                      onPressed: () {
+                        _showDatePicker('start');
+                      },
+                      clipBehavior: Clip.antiAlias,
+                      style: theme.elevatedButtonTheme.style,
+                    ),
+                  ),
                   Padding(
                     padding: const EdgeInsets.all(1.0),
                     child: ElevatedButton(
                       child: Text(
                         DateFormat.yMd().format(_endDate),
+                        style: theme.textTheme.button,
                       ),
                       onPressed: () {
                         _showDatePicker('end');
                       },
-                      autofocus: true,
                       clipBehavior: Clip.antiAlias,
-                      style: Theme.of(context).elevatedButtonTheme.style,
+                      style: theme.elevatedButtonTheme.style,
                     ),
                   ),
                 ],
