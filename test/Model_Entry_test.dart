@@ -2,11 +2,18 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-// Mock
+import 'package:file/file.dart';
+import 'package:file/memory.dart';
+
+// Mocks
 import 'Model_Entry_test.mocks.dart';
 
 // The Model under test
 import 'package:bloodhound/models/Entry.dart' as EntryModel;
+
+import '../lib/logging.dart';
+
+final logger = getLogger('Entry Test');
 
 // Ref: https://flutter.dev/docs/cookbook/testing
 
@@ -108,8 +115,7 @@ void main() {
     });
 
     test('fromMap', () {
-      EntryModel.Entry entry = EntryModel.Entry.fromMap(eMap);
-
+      EntryModel.Entry entry = EntryModel.entryFromMap(eMap);
       expect(entry.toMap(), eMap);
     });
   });
@@ -125,38 +131,50 @@ void main() {
       when(pathManMock.downloadsPath()).thenAnswer((_) async => '/test/path');
       when(perManMock.storage()).thenAnswer((_) async => true);
 
-      var dir = await EntryModel.Entry.getFileDir(
+      var dir = await EntryModel.getFileDir(
         perManMock,
         pathManMock,
-        fsLocal: false,
+        fileSystem: MemoryFileSystem(),
       );
 
       expect(dir, '/test/path/BloodHoundApp');
     });
 
-    test('toFile', () async {
-      final entryMock = MockEntry();
+    test('entryToFile', () async {
+      FileSystem fs = MemoryFileSystem();
+      Directory tempDir = fs.currentDirectory;
+
+      final entry = MockEntry();
       final pathManMock = MockPathManager();
       final perManMock = MockPermissionManager();
 
-      /// >>>>>>>>>>>>>>>>>>>>>>> Can't mock Class
-      /// static methods :(
-      /// Need to move the static methods out
-      /// of the Entry class
-      when(entryMock.getFileDir(
+      when(entry.toMap()).thenReturn(eMap);
+      when(entry.id).thenReturn('333');
+
+      String getFileDirStub(
+        EntryModel.PermissionManager pMan,
+        EntryModel.PathManager ptMan,
+      ) {
+        return tempDir.path;
+      }
+
+      String getFileNameStub(EntryModel.Entry e) {
+        return 'file.json';
+      }
+
+      await EntryModel.entryToFile(
+        entry,
+        getFileDirStub,
+        getFileNameStub,
         perManMock,
         pathManMock,
-        fsLocal: false,
-      )).thenAnswer((_) => '/test/path');
-
-      when(entryMock.getFileName(entryMock)).thenAnswer((_) => 'file.json');
-
-      await EntryModel.Entry.toFile(
-        entryMock,
-        perManMock,
-        pathManMock,
-        fsLocal: false,
+        fileSystem: fs,
       );
+
+      bool a = await tempDir.list().isEmpty;
+      expect(a, false);
+      File f = await tempDir.list().first;
+      expect(f.basename, 'file.json');
     });
 
     test('fromFile', () {});

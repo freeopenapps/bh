@@ -1,4 +1,4 @@
-import '../models/Entry.dart';
+import '../models/Entry.dart' as EntryModel;
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -31,7 +31,7 @@ class DBAPI {
   }
 
   //============= DB API
-  static Future<void> insert(Entry entry) async {
+  static Future<void> insert(EntryModel.Entry entry) async {
     await DBAPI._init();
     await DBAPI._db.insert(
       DBAPI.DB_TABLE,
@@ -40,7 +40,7 @@ class DBAPI {
     );
   }
 
-  static Future<void> update(Entry entry) async {
+  static Future<void> update(EntryModel.Entry entry) async {
     await DBAPI._init();
     await DBAPI._db.update(
       DBAPI.DB_TABLE,
@@ -50,15 +50,15 @@ class DBAPI {
     );
   }
 
-  static Future<List<Entry>> getAll() async {
+  static Future<List<EntryModel.Entry>> getAll() async {
     await DBAPI._init();
     List<Map<String, Object>> data = await DBAPI._db.query(DBAPI.DB_TABLE);
     return data.map((entryMap) {
-      return Entry.fromMap(entryMap);
+      return EntryModel.entryFromMap(entryMap);
     }).toList();
   }
 
-  static Future<void> delete(Entry entry) async {
+  static Future<void> delete(EntryModel.Entry entry) async {
     await DBAPI._init();
     await DBAPI._db.delete(
       DBAPI.DB_TABLE,
