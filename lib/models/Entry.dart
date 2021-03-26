@@ -10,6 +10,10 @@ import 'package:file/file.dart';
 import 'package:file/memory.dart';
 import 'package:file/local.dart';
 
+import '../logging.dart';
+
+final logger = getLogger('Entry');
+
 class PermissionManager {
   /// Wrapper class to facilitate mocking during testing
   Future<bool> storage() async {
@@ -89,6 +93,12 @@ class Entry {
       fs = MemoryFileSystem();
     }
 
+    logger.v('You don\'t always want to see all of these');
+    logger.d('Logs a debug message');
+    logger.i('Public Function called');
+    logger.w('This might become a problem');
+    logger.e('Something has happened');
+
     // print("Getting permissions!");
     if (await perMan.storage()) {
       try {
@@ -98,7 +108,8 @@ class Entry {
           join(tempDir, 'BloodHoundApp'),
         );
         if (await _tgt.exists()) {
-          // print('DIRECTORY FOUND: ${_tgt.path}');
+          print('DIRECTORY FOUND: ${_tgt.path}');
+
           return _tgt.path;
         } else {
           final Directory _newTgt = await _tgt.create(
@@ -115,25 +126,39 @@ class Entry {
     return '';
   }
 
-  // static Future<void> toFile(Entry entry) async {
-  //   /** Write a json file <id>.json for given Entry*/
-  //   try {
-  //     String path = await getFileDir();
-  //     // print('\n\ntoFile: PATH:');
-  //     // print(path);
-  //     if (path != '') {
-  //       var fullPath = join(path, Entry.getFileName(entry));
-  //       // print('Writing file: ' + fullPath);
-  //       File f = File(fullPath);
-  //       // print(f.path);
-  //       await f.writeAsString(json.encode(entry.toMap()));
-  //       // await File(fullPath).exists().then((value) => print(value));
-  //     }
-  //   } on Exception catch (e) {
-  //     print('toFile: ERROR\n');
-  //     print(e.toString());
-  //   }
-  // }
+  static Future<void> toFile(
+    Entry entry,
+    PermissionManager perMan,
+    PathManager pathMan, {
+    fsLocal: true,
+  }) async {
+    // Select FileSystem
+    // Local works on device FS. For builds.
+    // Memory creates FS in memory. For testing.
+    FileSystem fs;
+    if (fsLocal) {
+      fs = LocalFileSystem();
+    } else {
+      fs = MemoryFileSystem();
+    }
+    /** Write a json file <id>.json for given Entry*/
+    try {
+      String path = await Entry.getFileDir(perMan, pathMan);
+      // print('\n\ntoFile: PATH:');
+      // print(path);
+      if (path != '') {
+        var fullPath = join(path, Entry.getFileName(entry));
+        // print('Writing file: ' + fullPath);
+        File f = fs.file(fullPath);
+        // print(f.path);
+        await f.writeAsString(json.encode(entry.toMap()));
+        // await File(fullPath).exists().then((value) => print(value));
+      }
+    } on Exception catch (e) {
+      print('toFile: ERROR\n');
+      print(e.toString());
+    }
+  }
 
   // static Future<Entry> fromFile(String path) async {
   //   /** Read a json file and return an Entry */

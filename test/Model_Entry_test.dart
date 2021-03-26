@@ -90,6 +90,7 @@ void main() {
   group('Map', () {
     setUp(() {});
     tearDown(() {});
+
     test('toMap', () {
       EntryModel.Entry entry = EntryModel.Entry(
         ketones: eMap['ketones'],
@@ -123,7 +124,11 @@ void main() {
       when(pathMan.downloadsPath()).thenAnswer((_) async => '/test/path');
       when(perMan.storage()).thenAnswer((_) async => true);
 
-      var dir = await EntryModel.Entry.getFileDir(perMan, pathMan);
+      var dir = await EntryModel.Entry.getFileDir(
+        perMan,
+        pathMan,
+        fsLocal: false,
+      );
 
       expect(dir, '/test/path/BloodHoundApp');
     });

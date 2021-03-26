@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 
 import './views/EntryView.dart';
 import './providers/entry_list.dart';
 
 void main() {
+  Logger.level = Level.warning;
   runApp(AppRoot());
 }
 
