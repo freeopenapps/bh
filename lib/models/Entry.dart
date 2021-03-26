@@ -7,7 +7,6 @@ import 'package:uuid/uuid.dart';
 import 'package:ext_storage/ext_storage.dart';
 
 import 'package:file/file.dart';
-import 'package:file/memory.dart';
 import 'package:file/local.dart';
 
 import '../logging.dart';
@@ -125,7 +124,6 @@ Future<void> entryToFile(
       throw Exception('Failed to get path to file');
     }
     logger.d('Retrieved path: $path');
-
     String fullPath = join(path, getFileName(entry));
     logger.d('Attempting to create: $fullPath');
     File f = fileSystem.file(fullPath);
@@ -137,23 +135,18 @@ Future<void> entryToFile(
   }
 }
 
-Future<Entry> fromFile(
+Future<Entry> entryFromFile(
   String path,
   Function entryFromMap, {
-  fsLocal: true,
+  fileSystem = const LocalFileSystem(),
 }) async {
-  /** Read a json file and return an Entry */
-  FileSystem fs;
-  if (fsLocal) {
-    logger.d('Using local FS');
-    fs = LocalFileSystem();
-  } else {
-    logger.d('Using memory FS');
-    fs = MemoryFileSystem();
-  }
+  /// Read a json file and return an Entry
   try {
-    File f = fs.file(path);
+    File f = fileSystem.file(path);
+    bool created = await f.exists();
+    logger.d('Created: ${f.path}: ' + created.toString());
     String data = await f.readAsString();
+    logger.d('Read data: $data');
     Entry e = entryFromMap(json.decode(data));
     logger.d('Created Entry from: $path');
     return e;

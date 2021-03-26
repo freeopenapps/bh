@@ -149,7 +149,7 @@ void main() {
       final perManMock = MockPermissionManager();
 
       when(entry.toMap()).thenReturn(eMap);
-      when(entry.id).thenReturn('333');
+      when(entry.id).thenReturn('1');
 
       String getFileDirStub(
         EntryModel.PermissionManager pMan,
@@ -177,10 +177,45 @@ void main() {
       expect(f.basename, 'file.json');
     });
 
-    test('fromFile', () {});
+    test('entryFromFile', () async {
+      FileSystem fs = MemoryFileSystem();
+      Directory tempDir = fs.currentDirectory;
 
-    test('getFileName', () {});
+      // Create file
+      File f = fs.file(
+        tempDir.path +
+            '/' +
+            '2021-03-20_09-05-00_000.60649755-7167-44a1-9f57-a4626224f4ac.json',
+      );
+      f.writeAsString(
+        '{"id":"60649755-7167-44a1-9f57-a4626224f4ac","date":"2021-03-20 09:05:00.000","ketones":"0.5","glucose":"99","weight":"","pressure":"","note":"","picPath":""}',
+      );
 
-    test('', () {});
+      // stub function
+      EntryModel.Entry entryFromMapStub(Map<String, dynamic> data) {
+        return EntryModel.entryFromMap(eMap);
+      }
+
+      EntryModel.Entry result = await EntryModel.entryFromFile(
+        f.path,
+        entryFromMapStub,
+        fileSystem: fs,
+      );
+
+      expect(result.toMap(), eMap);
+    });
+
+    test('getFileName', () {
+      EntryModel.Entry entry = EntryModel.entryFromMap(eMap);
+      entry.id = '60649755-7167-44a1-9f57-a4626224f4ac';
+      entry.date = '2021-03-20 09:05:00.000';
+
+      String expected =
+          '2021-03-20_09-05-00_000.60649755-7167-44a1-9f57-a4626224f4ac.json';
+
+      String result = EntryModel.getFileName(entry);
+
+      expect(result, expected);
+    });
   });
 }

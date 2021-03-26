@@ -11,7 +11,7 @@ class SimpleLogPrinter extends LogPrinter {
   @override
   void log(Level level, message, exception, StackTrace stackTrace) {
     // Set level for all logging that uses this class
-    Logger.level = Level.debug;
+    Logger.level = Level.nothing;
 
     var color = PrettyPrinter.levelColors[level];
     var emoji = PrettyPrinter.levelEmojis[level];
