@@ -93,12 +93,6 @@ class Entry {
       fs = MemoryFileSystem();
     }
 
-    logger.v('You don\'t always want to see all of these');
-    logger.d('Logs a debug message');
-    logger.i('Public Function called');
-    logger.w('This might become a problem');
-    logger.e('Something has happened');
-
     // print("Getting permissions!");
     if (await perMan.storage()) {
       try {
@@ -108,19 +102,17 @@ class Entry {
           join(tempDir, 'BloodHoundApp'),
         );
         if (await _tgt.exists()) {
-          print('DIRECTORY FOUND: ${_tgt.path}');
-
+          logger.d('DIRECTORY FOUND: ${_tgt.path}');
           return _tgt.path;
         } else {
           final Directory _newTgt = await _tgt.create(
             recursive: true,
           );
-          // print('DIRECTORY CREATED: ${_newTgt.path}');
+          logger.d('DIRECTORY CREATED: ${_tgt.path}');
           return _newTgt.path;
         }
       } on Exception catch (e) {
-        print('getFileDir: ERROR:\n');
-        print(e);
+        logger.e('Could not get directory', e);
       }
     }
     return '';

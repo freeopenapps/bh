@@ -9,9 +9,9 @@ class SimpleLogPrinter extends LogPrinter {
 
   @override
   @override
-  void log(Level level, message, error, StackTrace stackTrace) {
+  void log(Level level, message, exception, StackTrace stackTrace) {
     // Set level for all logging that uses this class
-    Logger.level = Level.verbose;
+    Logger.level = Level.debug;
 
     var color = PrettyPrinter.levelColors[level];
     var emoji = PrettyPrinter.levelEmojis[level];
@@ -19,7 +19,11 @@ class SimpleLogPrinter extends LogPrinter {
     var vertLine = PrettyPrinter.verticalLine;
 
     println(color('$divider' * (100)));
-    println(color('$vertLine $emoji $className - $message'));
+    println(color('$vertLine $emoji [$className] $message'));
+    if (exception != null) {
+      println(color('$vertLine\t $exception'));
+    }
+
     println(color('$divider' * (100)));
   }
 }
