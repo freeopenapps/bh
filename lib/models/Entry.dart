@@ -88,8 +88,10 @@ class Entry {
     // Memory creates FS in memory. For testing.
     FileSystem fs;
     if (fsLocal) {
+      logger.d('Using local FS');
       fs = LocalFileSystem();
     } else {
+      logger.d('Using memory FS');
       fs = MemoryFileSystem();
     }
 
@@ -115,6 +117,7 @@ class Entry {
         logger.e('Could not get directory', e);
       }
     }
+    logger.e('No directory retrieved/created');
     return '';
   }
 
@@ -129,35 +132,53 @@ class Entry {
     // Memory creates FS in memory. For testing.
     FileSystem fs;
     if (fsLocal) {
+      logger.d('Using local FS');
       fs = LocalFileSystem();
     } else {
+      logger.d('Using memory FS');
       fs = MemoryFileSystem();
     }
-    /** Write a json file <id>.json for given Entry*/
+
+    // Write a json file: <date>_<time>.<uuid>.json for given Entry
     try {
       String path = await Entry.getFileDir(perMan, pathMan);
-      // print('\n\ntoFile: PATH:');
-      // print(path);
-      if (path != '') {
-        var fullPath = join(path, Entry.getFileName(entry));
-        // print('Writing file: ' + fullPath);
-        File f = fs.file(fullPath);
-        // print(f.path);
-        await f.writeAsString(json.encode(entry.toMap()));
-        // await File(fullPath).exists().then((value) => print(value));
+      if (path == '') {
+        throw Exception('Failed to get path to file');
       }
+      logger.d('Retrieved path: $path');
+
+      String fullPath = join(path, Entry.getFileName(entry));
+      File f = fs.file(fullPath);
+      await f.writeAsString(json.encode(entry.toMap()));
+      logger.d('Created file: $fullPath');
     } on Exception catch (e) {
-      print('toFile: ERROR\n');
-      print(e.toString());
+      logger.e('Failed to create file for Entry: ${entry.id}', e);
     }
   }
 
-  // static Future<Entry> fromFile(String path) async {
-  //   /** Read a json file and return an Entry */
-  //   File f = File(path);
-  //   String data = await f.readAsString();
-  //   return Entry.fromMap(json.decode(data));
-  // }
+  static Future<Entry> fromFile(
+    String path, {
+    fsLocal: true,
+  }) async {
+    /** Read a json file and return an Entry */
+    FileSystem fs;
+    if (fsLocal) {
+      logger.d('Using local FS');
+      fs = LocalFileSystem();
+    } else {
+      logger.d('Using memory FS');
+      fs = MemoryFileSystem();
+    }
+    try {
+      File f = fs.file(path);
+      String data = await f.readAsString();
+      Entry e = Entry.fromMap(json.decode(data));
+      logger.d('Created Entry from: $path');
+      return e;
+    } on Exception catch (e) {
+      logger.e('Failed to create Entry from: $path', e);
+    }
+  }
 
   static String getFileName(Entry entry) {
     // Output:  2021-03-17_11-00-00_000.a82bfe9f-0b28-4f2c-a0d2-3f2c41305c10.json

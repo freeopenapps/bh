@@ -22,6 +22,7 @@ final uuidRe =
     RegExp(r"[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}");
 
 @GenerateMocks([
+  EntryModel.Entry,
   EntryModel.PathManager,
   EntryModel.PermissionManager,
 ])
@@ -118,22 +119,45 @@ void main() {
     tearDown(() {});
 
     test('getFileDir', () async {
-      final pathMan = MockPathManager();
-      final perMan = MockPermissionManager();
+      final pathManMock = MockPathManager();
+      final perManMock = MockPermissionManager();
 
-      when(pathMan.downloadsPath()).thenAnswer((_) async => '/test/path');
-      when(perMan.storage()).thenAnswer((_) async => true);
+      when(pathManMock.downloadsPath()).thenAnswer((_) async => '/test/path');
+      when(perManMock.storage()).thenAnswer((_) async => true);
 
       var dir = await EntryModel.Entry.getFileDir(
-        perMan,
-        pathMan,
+        perManMock,
+        pathManMock,
         fsLocal: false,
       );
 
       expect(dir, '/test/path/BloodHoundApp');
     });
 
-    test('toFile', () {});
+    test('toFile', () async {
+      final entryMock = MockEntry();
+      final pathManMock = MockPathManager();
+      final perManMock = MockPermissionManager();
+
+      /// >>>>>>>>>>>>>>>>>>>>>>> Can't mock Class
+      /// static methods :(
+      /// Need to move the static methods out
+      /// of the Entry class
+      when(entryMock.getFileDir(
+        perManMock,
+        pathManMock,
+        fsLocal: false,
+      )).thenAnswer((_) => '/test/path');
+
+      when(entryMock.getFileName(entryMock)).thenAnswer((_) => 'file.json');
+
+      await EntryModel.Entry.toFile(
+        entryMock,
+        perManMock,
+        pathManMock,
+        fsLocal: false,
+      );
+    });
 
     test('fromFile', () {});
 
