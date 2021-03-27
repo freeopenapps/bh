@@ -249,7 +249,7 @@ class _EditEntryState extends State<EditEntry> {
                       onPressed: () => _deleteDialog(context),
                       autofocus: true,
                       clipBehavior: Clip.antiAlias,
-                      style: theme.elevatedButtonTheme.style.copyWith(
+                      style: theme.elevatedButtonTheme.style?.copyWith(
                         backgroundColor:
                             MaterialStateProperty.all<Color>(Colors.red),
                       ),

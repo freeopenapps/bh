@@ -8,9 +8,9 @@ class EntryRowItem extends StatelessWidget {
   final String units;
 
   EntryRowItem({
-    this.title,
-    this.value,
-    this.units,
+    this.title = '',
+    this.value = '',
+    this.units = '',
   });
 
   @override

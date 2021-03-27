@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:logger/logger.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
@@ -34,32 +35,30 @@ final uuidRe =
   EntryModel.PermissionManager,
 ])
 void main() {
-  Map<String, String> eMap;
+  Map<String, String> eMap = {
+    'id': '333',
+    'date': '',
+    'ketones': '',
+    'glucose': '',
+    'weight': '',
+    'pressure': '',
+    'note': '',
+    'picPath': '',
+  };
 
-  setUpAll(() {
-    eMap = {
-      'id': '333',
-      'date': '',
-      'ketones': '',
-      'glucose': '',
-      'weight': '',
-      'pressure': '',
-      'note': '',
-      'picPath': '',
-    };
-  });
+  setUpAll(() {});
   group('Constructor', () {
     setUp(() {});
     tearDown(() {});
     test('Without ID', () {
       EntryModel.Entry entry = EntryModel.Entry(
-        ketones: eMap['ketones'],
-        glucose: eMap['glucose'],
-        weight: eMap['weight'],
-        pressure: eMap['pressure'],
-        note: eMap['note'],
-        date: eMap['date'],
-        picPath: eMap['picPath'],
+        ketones: eMap['ketones']!,
+        glucose: eMap['glucose']!,
+        weight: eMap['weight']!,
+        pressure: eMap['pressure']!,
+        note: eMap['note']!,
+        date: eMap['date']!,
+        picPath: eMap['picPath']!,
       );
 
       expect(entry.ketones, eMap['ketones']);
@@ -74,14 +73,14 @@ void main() {
 
     test('With ID', () {
       EntryModel.Entry entry = EntryModel.Entry(
-        ketones: eMap['ketones'],
-        glucose: eMap['glucose'],
-        weight: eMap['weight'],
-        pressure: eMap['pressure'],
-        note: eMap['note'],
-        date: eMap['date'],
-        picPath: eMap['picPath'],
-        id: eMap['id'],
+        ketones: eMap['ketones']!,
+        glucose: eMap['glucose']!,
+        weight: eMap['weight']!,
+        pressure: eMap['pressure']!,
+        note: eMap['note']!,
+        date: eMap['date']!,
+        picPath: eMap['picPath']!,
+        id: eMap['id']!,
       );
 
       expect(entry.ketones, eMap['ketones']);
@@ -101,14 +100,14 @@ void main() {
 
     test('toMap', () {
       EntryModel.Entry entry = EntryModel.Entry(
-        ketones: eMap['ketones'],
-        glucose: eMap['glucose'],
-        weight: eMap['weight'],
-        pressure: eMap['pressure'],
-        note: eMap['note'],
-        date: eMap['date'],
-        picPath: eMap['picPath'],
-        id: eMap['id'],
+        ketones: eMap['ketones']!,
+        glucose: eMap['glucose']!,
+        weight: eMap['weight']!,
+        pressure: eMap['pressure']!,
+        note: eMap['note']!,
+        date: eMap['date']!,
+        picPath: eMap['picPath']!,
+        id: eMap['id']!,
       );
 
       expect(entry.toMap(), eMap);
@@ -173,7 +172,7 @@ void main() {
 
       bool a = await tempDir.list().isEmpty;
       expect(a, false);
-      File f = await tempDir.list().first;
+      FileSystemEntity f = await tempDir.list().first;
       expect(f.basename, 'file.json');
     });
 

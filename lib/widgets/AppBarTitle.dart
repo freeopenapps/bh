@@ -12,9 +12,9 @@ class AppBarTitle extends StatefulWidget {
   final String version;
 
   AppBarTitle({
-    this.screenWidth,
-    this.title,
-    this.version,
+    this.screenWidth = 100.0,
+    this.title = '',
+    this.version = '',
   });
   @override
   _AppBarTitleState createState() => _AppBarTitleState();

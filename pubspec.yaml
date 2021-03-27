@@ -18,41 +18,48 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.1+2
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  intl: ^0.15.8
-  uuid: ^2.1.5
+  intl: ^0.17.0
+  uuid: ^3.0.2
+  crossplat_objectid: ^2.1.4
   path_provider: ^2.0.1
-  sqflite: ^2.0.0+2
+  sqflite: ^2.0.0+3
   provider: ^5.0.0
   integration_test: ^1.0.2+2
   permission_handler: ^6.1.0
-  validators: ^2.0.1
-  ext_storage: ^1.0.3
   file: ^6.0.0
-  logger: ^0.6.0
+  logger: ^1.0.0
+  sqflite_common_ffi: ^2.0.0
+  # ext_storage: ^1.0.3
   
 
-  # flutter_launcher_icons: ^0.9.0
+  flutter_launcher_icons: ^0.9.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
 
 dev_dependencies:
-  mockito: ^4.1.4
+  mockito: ^5.0.3
   build_runner: 
   # test: ^1.15.8
   flutter_test:
     sdk: flutter
 
-# flutter_icons:
-#   android: "launcher_icon"
-#   ios: true
-#   image_path: "assets/icons/icon.png"
+dependency_overrides:
+  crypto: ^3.0.0
+  convert: ^3.0.0
+  args: ^2.0.0
+  archive: ^3.0.0
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icons/icon.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

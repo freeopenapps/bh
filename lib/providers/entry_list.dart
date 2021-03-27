@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'dart:collection';
-import 'package:validators/validators.dart';
+// import 'package:validators/validators.dart';
 import 'package:flutter/foundation.dart';
 
 import '../models/Entry.dart';
@@ -17,9 +17,9 @@ class EntryListProvider extends ChangeNotifier {
 
   //============= Internal methods
   Future<void> _init() async {
-    _entries = await DBAPI.getAll();
-    // Sort dates so latest at top of list
-    _entries.sort((a, b) => b.date.compareTo(a.date));
+    // _entries = await DBAPI.getAll();
+    // // Sort dates so latest at top of list
+    // _entries.sort((a, b) => b.date.compareTo(a.date));
     notifyListeners();
   }
 
@@ -35,18 +35,18 @@ class EntryListProvider extends ChangeNotifier {
   }
 
   void create(Entry entry) async {
-    await DBAPI.insert(entry);
-    await _init();
+    // await DBAPI.insert(entry);
+    // await _init();
   }
 
   void update(Entry entry) async {
-    await DBAPI.update(entry);
-    await _init();
+    // await DBAPI.update(entry);
+    // await _init();
   }
 
   void delete(Entry entry) async {
-    await DBAPI.delete(entry);
-    await _init();
+    // await DBAPI.delete(entry);
+    // await _init();
   }
 
   //============= Backup / Restore API

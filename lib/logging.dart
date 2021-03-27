@@ -3,31 +3,30 @@
 
 import 'package:logger/logger.dart';
 
-class SimpleLogPrinter extends LogPrinter {
+class SimpleLogger extends Logger {
   final String className;
-  SimpleLogPrinter(this.className);
+  SimpleLogger(this.className);
 
   @override
-  @override
-  void log(Level level, message, exception, StackTrace stackTrace) {
-    // Set level for all logging that uses this class
-    Logger.level = Level.nothing;
+  void log(Level level, dynamic message,
+      [dynamic error, StackTrace? stackTrace]) {
+    // // Set level for all logging that uses this class
+    Logger.level = Level.debug;
 
     var color = PrettyPrinter.levelColors[level];
     var emoji = PrettyPrinter.levelEmojis[level];
     var divider = PrettyPrinter.doubleDivider;
     var vertLine = PrettyPrinter.verticalLine;
 
-    println(color('$divider' * (100)));
-    println(color('$vertLine $emoji [$className] $message'));
-    if (exception != null) {
-      println(color('$vertLine\t $exception'));
+    print(color!('$divider' * (100)));
+    print(color('$vertLine $emoji [$className] $message'));
+    if (error != null) {
+      print(color('$vertLine\t $error'));
     }
-
-    println(color('$divider' * (100)));
+    print(color('$divider' * (100)));
   }
 }
 
 Logger getLogger(String className) {
-  return Logger(printer: SimpleLogPrinter(className));
+  return SimpleLogger(className);
 }

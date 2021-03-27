@@ -1,4 +1,30 @@
 //
+// ========= DB API
+//
+class DbApiStrings {
+  static const name = 'bloodhound.db';
+  static const version = 1;
+  static const table = 'entries';
+  static const columns = '(' +
+      'id TEXT PRIMARY KEY, ' +
+      'date TEXT, ' +
+      'ketones TEXT, ' +
+      'glucose TEXT, ' +
+      'weight TEXT, ' +
+      'pressure TEXT, ' +
+      'note TEXT, ' +
+      'picPath TEXT' +
+      ')';
+}
+
+//
+// ========= MODELS
+//
+class EntryStrings {
+  static const backupDirName = 'BloodHoundApp';
+}
+
+//
 // ========= VIEWS
 //
 class EntryViewStrings {

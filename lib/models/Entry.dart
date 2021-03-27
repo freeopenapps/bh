@@ -4,11 +4,13 @@ import 'package:flutter/foundation.dart';
 import 'package:path/path.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:uuid/uuid.dart';
-import 'package:ext_storage/ext_storage.dart';
+// import 'package:crossplat_objectid/crossplat_objectid.dart';
+// import 'package:ext_storage/ext_storage.dart';
 
 import 'package:file/file.dart';
 import 'package:file/local.dart';
 
+import '../strings.dart';
 import '../logging.dart';
 
 final logger = getLogger('Entry');
@@ -23,8 +25,9 @@ class PermissionManager {
 class PathManager {
   /// Wrapper class to facilitate mocking during testing
   Future<String> downloadsPath() async {
-    return await ExtStorage.getExternalStoragePublicDirectory(
-        ExtStorage.DIRECTORY_DOWNLOADS);
+    return await Future.value('Ok!');
+    // return await ExtStorage.getExternalStoragePublicDirectory(
+    //     ExtStorage.DIRECTORY_DOWNLOADS);
   }
 }
 
@@ -39,19 +42,19 @@ class Entry {
   String picPath; //Path to pic
 
   Entry({
-    @required this.ketones,
-    @required this.glucose,
-    @required this.weight,
-    @required this.pressure,
-    @required this.note,
-    @required this.date,
-    @required this.picPath,
+    this.ketones = '',
+    this.glucose = '',
+    this.weight = '',
+    this.pressure = '',
+    this.note = '',
+    this.date = '',
+    this.picPath = '',
     this.id = '',
   }) {
     if (this.id == '') this.id = Uuid().v4();
   }
 
-  Map<String, String> toMap() {
+  Map<String, String?> toMap() {
     return {
       'id': id,
       'date': date,
@@ -86,10 +89,9 @@ Future<String> getFileDir(
   if (await perMan.storage()) {
     logger.d('Getting permissions');
     try {
-      // Directory tempDir = await getApplicationDocumentsDirectory();
       String tempDir = await pathMan.downloadsPath();
       Directory _tgt = fileSystem.directory(
-        join(tempDir, 'BloodHoundApp'),
+        join(tempDir, EntryStrings.backupDirName),
       );
       if (await _tgt.exists()) {
         logger.d('DIRECTORY FOUND: ${_tgt.path}');
@@ -153,6 +155,7 @@ Future<Entry> entryFromFile(
   } on Exception catch (e) {
     logger.e('Failed to create Entry from: $path', e);
   }
+  throw NullThrownError();
 }
 
 String getFileName(Entry entry) {

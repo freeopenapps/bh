@@ -14,7 +14,10 @@ class EntryView extends StatefulWidget {
   final String title;
   final String version;
 
-  EntryView({this.title, this.version});
+  EntryView({
+    this.title = '',
+    this.version = '',
+  });
   @override
   _EntryViewState createState() => _EntryViewState();
 }
