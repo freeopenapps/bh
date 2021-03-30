@@ -13,6 +13,8 @@ import '../logging.dart';
 final logger = getLogger('DB API');
 
 class DatabaseFactoryManager {
+  /// Wrapper to be able to inject method
+  /// to facilitate testing.
   sqf.DatabaseFactory getFactory() {
     logger.d('DatabaseFactoryManager: getFactory() called');
     return databaseFactoryFfi;
@@ -42,8 +44,13 @@ class DB {
     @required dbFactoryManager,
   }) {
     logger.d('_internal() called');
-    _createDB(location, dbFactoryManager);
+    // Instance method
+    this._createDB(location, dbFactoryManager);
+    // Static variable
     _singleton = this;
+    // ... this named constructor can
+    // use static variables and instance
+    // methods... interesting...
   }
 
   Future<void> _createDB(
@@ -72,22 +79,23 @@ class DB {
     }
   }
 
-  // Future<void> insert(EntryModel.Entry entry) async {
-  //   try {
-  //     if (this._db != null) {
-  //       await this._db?.insert(
-  //             DbApiStrings.table,
-  //             entry.toMap(),
-  //             conflictAlgorithm: sqf.ConflictAlgorithm.replace,
-  //           );
-  //       logger.d('Inserted: ${entry.id}');
-  //     } else {
-  //       throw Exception('Invalid _db value: ${this._db}');
-  //     }
-  //   } on Exception catch (e) {
-  //     logger.e(e);
-  //   }
-  // }
+  Future<void> insert(EntryModel.Entry entry) async {
+    try {
+      if (this._db != null) {
+        int? id = await this._db?.insert(
+              DbApiStrings.table,
+              entry.toMap(),
+              conflictAlgorithm: sqf.ConflictAlgorithm.replace,
+            );
+        logger.d('Inserted: ${entry.id}');
+        logger.d('Returned id: $id');
+      } else {
+        throw Exception('Invalid _db value: ${this._db}');
+      }
+    } on Exception catch (e) {
+      logger.e(e);
+    }
+  }
 }
 
 // class DBAPI {
