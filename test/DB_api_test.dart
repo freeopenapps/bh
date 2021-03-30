@@ -1,60 +1,118 @@
+import 'dart:ffi';
+
 import 'package:file/local.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:path/path.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart' as ffi;
+import 'package:sqflite/sqflite.dart' as sqf;
+
 import 'package:file/file.dart';
 import 'package:file/memory.dart';
 
+/// Resources:
+/// https://github.com/tekartik/sqflite/issues/49
+
 // The Model under test
 import 'package:bloodhound/data/db_api.dart';
+
+import 'package:bloodhound/models/Entry.dart';
 import '../lib/strings.dart';
 import '../lib/logging.dart';
+import 'DB_api_test.mocks.dart';
 
-final logger = getLogger('Entry Test');
+final logger = getLogger('DB Test');
 
+@GenerateMocks([
+  DatabaseFactoryManager,
+  sqf.DatabaseFactory,
+  sqf.Database,
+])
 void main() {
-  TestWidgetsFlutterBinding.ensureInitialized();
-
-  /// Wanted to use MemoryFileSystem but go this error:
-  /// bad parameter or other API misuse (code 21)
-  FileSystem fs = LocalFileSystem();
-  Directory? tempDir;
+  String tempDir = '/fake/path';
+  Entry? entry;
+  DatabaseFactoryManager mockDbFactoryManager = MockDatabaseFactoryManager();
+  MockDatabaseFactory mockDBFactory = MockDatabaseFactory();
+  MockDatabase mockDB = MockDatabase();
 
   setUpAll(() {
-    tempDir = fs.directory(fs.systemTempDirectory.path + '/bh_temp');
-    logger.i('Created directory: ${tempDir?.path}');
+    logger.d('setUpAll() called');
+    entry = Entry(
+      id: '333',
+      date: '',
+      ketones: '',
+      glucose: '',
+      weight: '',
+      pressure: '',
+      note: '',
+      picPath: '',
+    );
   });
 
   tearDownAll(() {
-    tempDir?.delete(recursive: true);
-    logger.i('Deleted directory: ${tempDir?.path}');
+    logger.d('tearDownAll() called');
   });
 
   group('createDB', () {
-    setUp(() {});
-    tearDown(() {});
+    setUp(() {
+      logger.d('createDB: setUp() called');
 
-    test('create a new db when instantiated', () async {
-      DB(location: tempDir?.path);
-
-      File dbf = fs.file(join(tempDir!.path, DbApiStrings.name));
-      bool exists = await dbf.exists();
-      expect(exists, true);
+      /// Setup mock return behavior
+      when(mockDbFactoryManager.getFactory()).thenReturn(mockDBFactory);
+      when(mockDBFactory.openDatabase(join(tempDir, DbApiStrings.name)))
+          .thenAnswer((_) async => mockDB);
+      String cmd = 'CREATE TABLE ' + DbApiStrings.table + DbApiStrings.columns;
+      when(mockDB.execute(cmd)).thenAnswer((_) async => Future.value(null));
     });
 
-    test(
-        'given the db has been made, when createDB is called, then return the existing db',
-        () {});
+    tearDown(() {
+      logger.d('createDB: tearDown() called');
+    });
+
+    test('create new db and only ever return same instance of DB class',
+        () async {
+      logger.d('1st call to DB()');
+      DB db1 = DB(location: tempDir, dbFactoryManager: mockDbFactoryManager);
+
+      /// Wait for all async DB stuff to be done
+      await Future.delayed(const Duration(seconds: 1), () {});
+
+      logger.d('Verifying DB setup');
+      verify(mockDbFactoryManager.getFactory());
+      verify(mockDBFactory.openDatabase(join(tempDir, DbApiStrings.name)));
+      verify(mockDB.execute(
+          'CREATE TABLE ' + DbApiStrings.table + DbApiStrings.columns));
+
+      logger.d('2nd call to DB()');
+      DB db2 = DB(location: tempDir, dbFactoryManager: mockDbFactoryManager);
+
+      /// Wait for all async DB stuff to be done
+      await Future.delayed(const Duration(seconds: 1), () {});
+
+      logger.d('Verifying DB() not setup again, returns same instance');
+      assert(db1 == db2);
+      assert(db2.db == mockDB);
+      verifyNever(mockDbFactoryManager.getFactory());
+      verifyNever(mockDBFactory.openDatabase(join(tempDir, DbApiStrings.name)));
+      verifyNever(mockDB.execute(
+          'CREATE TABLE ' + DbApiStrings.table + DbApiStrings.columns));
+    });
   });
 
-  group('insert', () {
-    setUp(() {});
-    tearDown(() {});
-    test('', () {});
-  });
+  // group('insert', () {
+  //   setUp(() {});
+  //   tearDown(() {});
+  //   test('Insert object into db', () async {
+  //     DB db = DB(location: tempDir?.path);
+  //     db.insert(entry!);
+
+  //     File dbf = fs.file(join(tempDir!.path, DbApiStrings.name));
+  //     bool exists = await dbf.exists();
+  //     expect(exists, true);
+  //   });
+  // });
 
   group('update', () {
     setUp(() {});

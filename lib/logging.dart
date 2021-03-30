@@ -11,7 +11,7 @@ class SimpleLogger extends Logger {
   void log(Level level, dynamic message,
       [dynamic error, StackTrace? stackTrace]) {
     // // Set level for all logging that uses this class
-    Logger.level = Level.debug;
+    Logger.level = Level.nothing;
 
     var color = PrettyPrinter.levelColors[level];
     var emoji = PrettyPrinter.levelEmojis[level];

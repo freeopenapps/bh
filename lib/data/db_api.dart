@@ -1,8 +1,8 @@
-import 'dart:ffi';
+// import 'dart:ffi';
 
 import '../models/Entry.dart' as EntryModel;
 import 'package:flutter/foundation.dart';
-import 'package:path/path.dart';
+import 'package:path/path.dart' as path;
 
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:sqflite/sqflite.dart' as sqf;
@@ -12,43 +12,82 @@ import '../logging.dart';
 
 final logger = getLogger('DB API');
 
+class DatabaseFactoryManager {
+  sqf.DatabaseFactory getFactory() {
+    logger.d('DatabaseFactoryManager: getFactory() called');
+    return databaseFactoryFfi;
+  }
+}
+
 class DB {
-  String? location;
-  final sqf.DatabaseFactory dbf = databaseFactoryFfi;
   sqf.Database? _db;
-
-  static final DB _singleton = DB._init();
-  factory DB({@required String? location}) {
-    /// Only 1 instance ever created
-    /// Prefereable to static as it is a proper
-    /// instance that can share information,
-    /// versus static vars/methods that
-    /// do not share instance information
-    _singleton.location = location;
-    return _singleton;
+  sqf.Database? get db {
+    return _db;
   }
 
-  DB._init() {
-    this._createDB();
+  static DB? _singleton;
+
+  factory DB({
+    @required location,
+    @required dbFactoryManager,
+  }) =>
+      _singleton ??
+      DB._internal(
+        location: location,
+        dbFactoryManager: dbFactoryManager,
+      );
+
+  DB._internal({
+    @required location,
+    @required dbFactoryManager,
+  }) {
+    logger.d('_internal() called');
+    _createDB(location, dbFactoryManager);
+    _singleton = this;
   }
 
-  Future<void> _createDB() async {
-    final String name = DbApiStrings.name;
-    final String table = DbApiStrings.table;
-    final String columns = DbApiStrings.columns;
-
-    logger.d('Created DB: $location/$name');
-    logger.d('With TABLE: $table');
-    logger.d('With COLUMNS: $columns');
-
+  Future<void> _createDB(
+    String location,
+    DatabaseFactoryManager dbFactoryManager,
+  ) async {
     try {
-      this._db = await dbf.openDatabase(join(this.location!, name));
-      await this._db?.execute('CREATE TABLE ' + table + columns);
-      logger.d('DB Created successfully');
+      logger.d('Creating DB at location: $location');
+
+      sqf.DatabaseFactory factory = dbFactoryManager.getFactory();
+      this._db = await factory.openDatabase(
+        path.join(
+          location,
+          DbApiStrings.name,
+        ),
+      );
+      String cmd = 'CREATE TABLE ' + DbApiStrings.table + DbApiStrings.columns;
+      await this._db?.execute(cmd);
+
+      logger.d('Created DB: $location/${DbApiStrings.name}');
+      logger.d('With TABLE: ${DbApiStrings.table}');
+      logger.d('With COLUMNS: ${DbApiStrings.columns}');
     } on Exception catch (e) {
       logger.e(e);
+      throw Exception(e);
     }
   }
+
+  // Future<void> insert(EntryModel.Entry entry) async {
+  //   try {
+  //     if (this._db != null) {
+  //       await this._db?.insert(
+  //             DbApiStrings.table,
+  //             entry.toMap(),
+  //             conflictAlgorithm: sqf.ConflictAlgorithm.replace,
+  //           );
+  //       logger.d('Inserted: ${entry.id}');
+  //     } else {
+  //       throw Exception('Invalid _db value: ${this._db}');
+  //     }
+  //   } on Exception catch (e) {
+  //     logger.e(e);
+  //   }
+  // }
 }
 
 // class DBAPI {
