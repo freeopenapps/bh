@@ -80,26 +80,6 @@ class MockDatabase extends _i1.Mock implements _i2.Database {
   }
 
   @override
-  Future<int> insert(
-    String cmd,
-    Map<String, Object?> m, {
-    _i2.ConflictAlgorithm? conflictAlgorithm,
-    String? nullColumnHack,
-  }) async {
-    return super.noSuchMethod(
-      Invocation.method(
-        #insert,
-        [
-          cmd,
-          m,
-          conflictAlgorithm,
-          nullColumnHack,
-        ],
-      ),
-    ) as dynamic;
-  }
-
-  @override
   String get path =>
       (super.noSuchMethod(Invocation.getter(#path), returnValue: '') as String);
   @override
